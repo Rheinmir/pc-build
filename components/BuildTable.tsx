@@ -59,7 +59,7 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                 src={item.image}
                                             />
                                             <div className="flex flex-col min-w-0 flex-1">
-                                                <div className="flip-container perspective-1000">
+                                                <div className="flip-container perspective-1000 overflow-hidden">
                                                     <div className="flip-inner">
                                                         <div className="flip-front">
                                                             {showPriceFirst ? (
@@ -71,7 +71,7 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                                     href={item.url}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full"
+                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block"
                                                                     title={item.name}
                                                                 >
                                                                     {item.name}
@@ -84,7 +84,7 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                                     href={item.url}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full text-xs"
+                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block text-xs"
                                                                     title={item.name}
                                                                 >
                                                                     {item.name}
