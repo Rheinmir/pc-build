@@ -71,19 +71,30 @@ export default function Home() {
     return "Component";
   };
 
-  const handleAdd = (url: string, price: string) => {
+  const handleAdd = (url: string, price: string, manualName?: string) => {
     const priceNum = parseFloat(price);
     if (isNaN(priceNum)) return;
 
-    const itemName = extractNameFromUrl(url);
+    let itemName: string;
+    let category: string;
+
+    if (manualName) {
+      // Format: "Category::Name" from manual mode
+      const [cat, ...nameParts] = manualName.split('::');
+      itemName = nameParts.join('::');
+      category = cat;
+    } else {
+      itemName = extractNameFromUrl(url);
+      category = guessCategory(itemName);
+    }
 
     const newItem: BuildItem = {
       id: Date.now().toString(),
       name: itemName,
-      category: guessCategory(itemName),
+      category,
       price: priceNum,
       url: url,
-      image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop", // Default tech image
+      image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop",
     };
 
     setItems([...items, newItem]);
