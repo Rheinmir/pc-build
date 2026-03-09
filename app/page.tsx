@@ -4,6 +4,7 @@ import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import QuickAdd from '@/components/QuickAdd';
 import BuildTable, { BuildItem } from '@/components/BuildTable';
+import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
@@ -94,6 +95,37 @@ export default function Home() {
     alert("Build saved successfully to your library!");
   };
 
+  const handleExport = () => {
+    if (items.length === 0) {
+      alert("Add some parts before exporting!");
+      return;
+    }
+    exportToExcel(items);
+  };
+
+  const handleImport = async (file: File) => {
+    try {
+      const importedData = await importFromExcel(file);
+      const newItems: BuildItem[] = importedData.map((item, idx) => ({
+        id: (Date.now() + idx).toString(),
+        name: item.name || 'Unknown Item',
+        category: item.category || 'Component',
+        price: item.price || 0,
+        url: item.url || '#',
+        image: item.image || "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop"
+      }));
+
+      if (confirm(`Do you want to replace your current build with ${newItems.length} items from the Excel file? (Cancel to add them to your current build)`)) {
+        setItems(newItems);
+      } else {
+        setItems([...items, ...newItems]);
+      }
+    } catch (error) {
+      console.error("Import failed", error);
+      alert("Failed to import Excel file. Please make sure it follows the correct format.");
+    }
+  };
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
   };
@@ -106,7 +138,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="ml-64 flex-1 flex flex-col min-w-0" data-purpose="main-dashboard-content">
-        <Header onSave={handleSave} />
+        <Header onSave={handleSave} onExport={handleExport} onImport={handleImport} />
 
         {/* Content Area */}
         <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
