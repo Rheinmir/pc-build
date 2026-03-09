@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import QuickAdd from '@/components/QuickAdd';
 import BuildTable, { BuildItem } from '@/components/BuildTable';
 import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
 import { lookupMsrp } from '@/lib/lookupMsrp';
+import { extractNameFromUrl } from '@/lib/extractName';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
@@ -42,23 +43,6 @@ export default function Home() {
     }
   }, [showPriceFirst, isLoaded]);
 
-  const extractNameFromUrl = (url: string) => {
-    try {
-      const parsed = new URL(url);
-      if (parsed.hostname.includes('shopee.vn') || parsed.hostname.includes('shopee.com')) {
-        const path = parsed.pathname;
-        if (path.includes('-i.')) {
-          const parts = path.split('-i.');
-          const slugPart = parts[0].split('/').pop() || "";
-          return decodeURIComponent(slugPart).replace(/-/g, ' ');
-        }
-        return "Shopee Item";
-      }
-      return parsed.hostname.replace('www.', '') + " Item";
-    } catch {
-      return "Custom Component";
-    }
-  };
 
   const guessCategory = (name: string): string => {
     const n = name.toLowerCase();
