@@ -9,16 +9,21 @@ import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showPriceFirst, setShowPriceFirst] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('pc-builder-current-items');
+    const savedToggle = localStorage.getItem('pc-builder-show-price-first');
     if (saved) {
       try {
         setItems(JSON.parse(saved));
       } catch (e) {
         console.error("Failed to parse saved items", e);
       }
+    }
+    if (savedToggle) {
+      setShowPriceFirst(savedToggle === 'true');
     }
     setIsLoaded(true);
   }, []);
@@ -29,6 +34,12 @@ export default function Home() {
       localStorage.setItem('pc-builder-current-items', JSON.stringify(items));
     }
   }, [items, isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('pc-builder-show-price-first', showPriceFirst.toString());
+    }
+  }, [showPriceFirst, isLoaded]);
 
   const extractNameFromUrl = (url: string) => {
     try {
@@ -138,25 +149,22 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="ml-64 flex-1 flex flex-col min-w-0" data-purpose="main-dashboard-content">
-        <Header onSave={handleSave} onExport={handleExport} onImport={handleImport} />
+        <Header
+          onSave={handleSave}
+          onExport={handleExport}
+          onImport={handleImport}
+          showPriceFirst={showPriceFirst}
+          onToggleDisplay={() => setShowPriceFirst(!showPriceFirst)}
+        />
 
         {/* Content Area */}
         <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
           {/* Hero Stats Section */}
-          <section className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6" data-purpose="hero-stats">
-            <div className="space-y-1">
-              <h1 className="text-4xl font-bold tracking-tight text-black">My Custom Rig</h1>
-              <p className="font-medium text-gray-600">
-                Current Estimated Cost: <span className="text-lg text-black font-bold">{formatPrice(totalPrice)}</span>
-              </p>
-            </div>
-            <div className="bg-white border border-gray-200 p-6 rounded-2xl w-full md:w-64 shadow-sm" data-purpose="summary-card">
-              <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-1">Total Items</p>
-              <div className="flex items-baseline space-x-2">
-                <span className="text-3xl font-bold text-black">{items.length}</span>
-                <span className="text-gray-400 font-medium">Parts</span>
-              </div>
-            </div>
+          <section className="space-y-1" data-purpose="hero-stats">
+            <h1 className="text-4xl font-bold tracking-tight text-black">My Custom Rig</h1>
+            <p className="font-medium text-gray-500">
+              {items.length} {items.length === 1 ? 'part' : 'parts'} &middot; Total: <span className="text-black font-bold">{formatPrice(totalPrice)}</span>
+            </p>
           </section>
 
           <QuickAdd onAdd={handleAdd} />
@@ -165,6 +173,7 @@ export default function Home() {
             items={items}
             onDelete={handleDelete}
             formatPrice={formatPrice}
+            showPriceFirst={showPriceFirst}
           />
         </div>
       </main>

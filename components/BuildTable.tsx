@@ -14,9 +14,10 @@ type BuildTableProps = {
     items: BuildItem[];
     onDelete: (id: string) => void;
     formatPrice: (price: number) => string;
+    showPriceFirst?: boolean;
 };
 
-export default function BuildTable({ items, onDelete, formatPrice }: BuildTableProps) {
+export default function BuildTable({ items, onDelete, formatPrice, showPriceFirst = false }: BuildTableProps) {
     const [selectedItem, setSelectedItem] = useState<{ name: string, category: string } | null>(null);
     const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
@@ -28,9 +29,8 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                 category={selectedItem?.category || ""}
                 currentItemName={selectedItem?.name || ""}
             />
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
                 <h3 className="font-semibold text-black">Current Build Details</h3>
-                <span className="text-xs text-gray-500 font-medium">Last updated: Just now</span>
             </div>
             <div className="overflow-x-auto">
                 {items.length === 0 ? (
@@ -42,9 +42,9 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200">
-                                <th className="px-6 py-4">Component Name</th>
+                                <th className="px-6 py-4">{showPriceFirst ? 'Price' : 'Component Name'}</th>
                                 <th className="px-6 py-4">Category</th>
-                                <th className="px-6 py-4">Price</th>
+                                <th className="px-6 py-4">{showPriceFirst ? 'Component Name' : 'Price'}</th>
                                 <th className="px-6 py-4 text-right">Actions</th>
                             </tr>
                         </thead>
@@ -62,20 +62,38 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                                                 <div className="flip-container perspective-1000">
                                                     <div className="flip-inner">
                                                         <div className="flip-front">
-                                                            <a
-                                                                href={item.url}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full"
-                                                                title={item.name}
-                                                            >
-                                                                {item.name}
-                                                            </a>
+                                                            {showPriceFirst ? (
+                                                                <span className="font-bold text-black text-sm">
+                                                                    {formatPrice(item.price)}
+                                                                </span>
+                                                            ) : (
+                                                                <a
+                                                                    href={item.url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full"
+                                                                    title={item.name}
+                                                                >
+                                                                    {item.name}
+                                                                </a>
+                                                            )}
                                                         </div>
                                                         <div className="flip-back">
-                                                            <span className="font-bold text-black text-sm">
-                                                                {formatPrice(item.price)}
-                                                            </span>
+                                                            {showPriceFirst ? (
+                                                                <a
+                                                                    href={item.url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full text-xs"
+                                                                    title={item.name}
+                                                                >
+                                                                    {item.name}
+                                                                </a>
+                                                            ) : (
+                                                                <span className="font-bold text-black text-sm">
+                                                                    {formatPrice(item.price)}
+                                                                </span>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -96,8 +114,18 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                                             {item.category}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 font-bold text-black">
-                                        {formatPrice(item.price)}
+                                    <td className="px-6 py-4 font-bold text-black text-sm">
+                                        {showPriceFirst ? (
+                                            <a
+                                                href={item.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-medium text-gray-500 hover:text-black hover:underline transition-all line-clamp-1 text-xs max-w-[180px] block"
+                                                title={item.name}
+                                            >
+                                                {item.name}
+                                            </a>
+                                        ) : formatPrice(item.price)}
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
