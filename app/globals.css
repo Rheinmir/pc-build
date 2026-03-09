@@ -34,13 +34,12 @@
 /* Flip animation for tier list items */
 .tier-flip {
   perspective: 600px;
-  height: 2.25rem;
 }
 
 .tier-flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   transition: transform 0.35s;
   transform-style: preserve-3d;
 }
@@ -51,8 +50,8 @@
 
 .tier-flip-front,
 .tier-flip-back {
-  position: absolute;
-  inset: 0;
+  grid-column: 1;
+  grid-row: 1;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   display: flex;
@@ -62,9 +61,6 @@
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .tier-flip-back {
