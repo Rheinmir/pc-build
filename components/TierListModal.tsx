@@ -63,14 +63,20 @@ function SortableItem({ id, item, isCurrent }: { id: string, item: TierItem, isC
             style={style}
             {...attributes}
             {...listeners}
-            className={`px-4 py-2 rounded text-xs font-bold transition-all border cursor-grab active:cursor-grabbing ${isCurrent
-                    ? "bg-white text-black border-white shadow-lg shadow-white/20 scale-105"
-                    : "bg-[#252525] text-gray-300 border-white/5 hover:border-white/20"
+            className={`tier-flip border cursor-grab active:cursor-grabbing ${isCurrent
+                    ? "border-white shadow-lg shadow-white/20 scale-105"
+                    : "border-white/5 hover:border-white/20"
                 }`}
-            title={item.description}
         >
-            {item.name}
-            {isCurrent && <span className="ml-2 text-[10px] uppercase">Selected</span>}
+            <div className="tier-flip-inner">
+                <div className={`tier-flip-front ${isCurrent ? "bg-white text-black" : "bg-[#252525] text-gray-300"}`}>
+                    {item.name}
+                    {isCurrent && <span className="ml-2 text-[10px] uppercase">Selected</span>}
+                </div>
+                <div className={`tier-flip-back ${isCurrent ? "bg-white text-black" : "bg-[#252525] text-gray-400"}`}>
+                    {item.description}
+                </div>
+            </div>
         </div>
     );
 }
