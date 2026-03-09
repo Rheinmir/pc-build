@@ -1,29 +1,33 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import QuickAdd from '@/components/QuickAdd';
 import BuildTable, { BuildItem } from '@/components/BuildTable';
 
 export default function Home() {
-  const [items, setItems] = useState<BuildItem[]>([
-    {
-      id: "1",
-      name: "NVIDIA GeForce RTX 3080 Ti",
-      category: "Graphics Card",
-      price: 799.99,
-      url: "#",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAB2wvOvdvMvcjyz-nqnyPGxHOqx4mpT7QOpt9gDC7F6JurfrUAzd-ZvZoTMMY-q_0n8Zk8cQ0OmEw2u63iiFXT1HeznAoLK-VkwzpxrEChgz9MUd0JgYS0I-5_40-F_mE-ozJm-75JRSd9issN_ecKfXCSjCXEcGAmlPfs3gtOh1xK44DGefCizaETD63houlAZ2ERnuSgeTKqRw9BuFDXOolrqcDaFr1yWbH0vOXXkyniNZkkiWYZpGhC78YYpKVNJAl9xlTZiXRI"
-    },
-    {
-      id: "2",
-      name: "AMD Ryzen 9 5900X",
-      category: "Processor",
-      price: 349.00,
-      url: "#",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAFeEFzn_SFyNa0cWTLje7H_b5J_BF8mOBD9WJPmD_VkL7PG14VDBB0S_PhiYNSVUPNElwVawCkzSGCocIP7o3ewQ6y4rKr-NJExIIe1FOkKl8H7TQRIumKgS57bWiMujlu-3JqZ5mfbLnYVlL-PdOHaLPNuM4xjubFV8bKJ3OWUu4NppO3XIUmQQEN9FxXgiQPUXTEiC3FPSwHN7OT6KROQVegqB2VU3OnPWduNLUqoagfEtntrJI0r5db2VNw5fbkTl3lo3RJ2FQi"
-    },
-  ]);
+  const [items, setItems] = useState<BuildItem[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('pc-builder-current-items');
+    if (saved) {
+      try {
+        setItems(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse saved items", e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  // Auto-save to "current" storage on change
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('pc-builder-current-items', JSON.stringify(items));
+    }
+  }, [items, isLoaded]);
 
   const extractNameFromUrl = (url: string) => {
     try {
@@ -31,8 +35,9 @@ export default function Home() {
       if (parsed.hostname.includes('shopee.vn') || parsed.hostname.includes('shopee.com')) {
         const path = parsed.pathname;
         if (path.includes('-i.')) {
-          const slug = path.split('-i.')[0].replace('/', '');
-          return decodeURIComponent(slug).replace(/-/g, ' ');
+          const parts = path.split('-i.');
+          const slugPart = parts[0].split('/').pop() || "";
+          return decodeURIComponent(slugPart).replace(/-/g, ' ');
         }
         return "Shopee Item";
       }
@@ -40,6 +45,18 @@ export default function Home() {
     } catch {
       return "Custom Component";
     }
+  };
+
+  const guessCategory = (name: string): string => {
+    const n = name.toLowerCase();
+    if (n.includes('rtx') || n.includes('gtx') || n.includes('radeon') || n.includes('vga') || n.includes('card màn hình')) return "Graphics Card";
+    if (n.includes('ryzen') || n.includes('intel core') || n.includes('cpu') || n.includes('vi xử lý')) return "Processor";
+    if (n.includes('mainboard') || n.includes('bo mạch chủ') || n.includes('motherboard')) return "Motherboard";
+    if (n.includes('ram') || n.includes('memory')) return "RAM";
+    if (n.includes('ssd') || n.includes('hdd') || n.includes('ổ cứng')) return "Storage";
+    if (n.includes('psu') || n.includes('nguồn') || n.includes('power supply')) return "Power Supply";
+    if (n.includes('case') || n.includes('vỏ máy')) return "Case";
+    return "Component";
   };
 
   const handleAdd = (url: string, price: string) => {
@@ -51,10 +68,10 @@ export default function Home() {
     const newItem: BuildItem = {
       id: Date.now().toString(),
       name: itemName,
-      category: "Component", // Default category or could be guessed
+      category: guessCategory(itemName),
       price: priceNum,
       url: url,
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDeLZ9-jRi6sHYXOhaabDLZzs_IyR4tJrds4XjL5dy14Esp4nYpdpaHqmE6L_yd4xHP1ePMQlgux7EnXy7c7-sPau2ow2JPAz69N6OgbViSsWnLfPzvMOzj2T5Fpz82TjRcPlCLeyhwgpbOkpLK7JaHVdFpkDFU1l3-4I3hgjPKPyk-fKb4IOu52xAOKk3I2diDG45jRVFt_gCzLe5yy3BhP57fdXBNMjQD0xjGnCBkTVtqacjhzzAaakU3w0IE5lykOL37ijhJiiMY", // Placeholder image
+      image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop", // Default tech image
     };
 
     setItems([...items, newItem]);
@@ -64,8 +81,20 @@ export default function Home() {
     setItems(items.filter(item => item.id !== id));
   };
 
+  const handleSave = () => {
+    // Save to a "saved builds" list in addition to "current"
+    const savedBuilds = JSON.parse(localStorage.getItem('pc-builder-saved-builds') || '[]');
+    const newBuild = {
+      id: Date.now().toString(),
+      name: `Build ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+      items: items,
+      total: items.reduce((acc, item) => acc + item.price, 0)
+    };
+    localStorage.setItem('pc-builder-saved-builds', JSON.stringify([...savedBuilds, newBuild]));
+    alert("Build saved successfully to your library!");
+  };
+
   const formatPrice = (price: number) => {
-    // We format as currency, if users use VND they can enter big numbers, let's just do standard localized string
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
   };
 
@@ -77,7 +106,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="ml-64 flex-1 flex flex-col min-w-0" data-purpose="main-dashboard-content">
-        <Header />
+        <Header onSave={handleSave} />
 
         {/* Content Area */}
         <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
