@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import QuickAdd from '@/components/QuickAdd';
 import BuildTable, { BuildItem } from '@/components/BuildTable';
 import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
+import { lookupMsrp } from '@/lib/lookupMsrp';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
@@ -87,14 +88,16 @@ export default function Home() {
       category = guessCategory(itemName);
     }
 
-    const msrpNum = msrp ? parseFloat(msrp) : undefined;
+    const manualMsrp = msrp ? parseFloat(msrp) : undefined;
+    const autoMsrp = lookupMsrp(itemName);
+    const resolvedMsrp = (manualMsrp && !isNaN(manualMsrp)) ? manualMsrp : autoMsrp;
 
     const newItem: BuildItem = {
       id: Date.now().toString(),
       name: itemName,
       category,
       price: priceNum,
-      msrp: msrpNum && !isNaN(msrpNum) ? msrpNum : undefined,
+      msrp: resolvedMsrp,
       url: url,
       image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop",
     };
