@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TierListModal from './TierListModal';
 
 export type BuildItem = {
     id: string;
@@ -16,10 +17,17 @@ type BuildTableProps = {
 };
 
 export default function BuildTable({ items, onDelete, formatPrice }: BuildTableProps) {
+    const [selectedItem, setSelectedItem] = useState<{ name: string, category: string } | null>(null);
     const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
     return (
         <section className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm" data-purpose="build-details-table">
+            <TierListModal
+                isOpen={!!selectedItem}
+                onClose={() => setSelectedItem(null)}
+                category={selectedItem?.category || ""}
+                currentItemName={selectedItem?.name || ""}
+            />
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                 <h3 className="font-semibold text-black">Current Build Details</h3>
                 <span className="text-xs text-gray-500 font-medium">Last updated: Just now</span>
@@ -50,15 +58,26 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                                                 className="w-10 h-10 rounded border border-gray-200 object-cover"
                                                 src={item.image}
                                             />
-                                            <a
-                                                href={item.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1"
-                                                title={item.name}
-                                            >
-                                                {item.name}
-                                            </a>
+                                            <div className="flex flex-col">
+                                                <a
+                                                    href={item.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1"
+                                                    title={item.name}
+                                                >
+                                                    {item.name}
+                                                </a>
+                                                <button
+                                                    onClick={() => setSelectedItem({ name: item.name, category: item.category })}
+                                                    className="text-[10px] font-bold text-gray-400 hover:text-black transition-colors flex items-center gap-1 uppercase tracking-wider"
+                                                >
+                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                                                    </svg>
+                                                    View Tier
+                                                </button>
+                                            </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
