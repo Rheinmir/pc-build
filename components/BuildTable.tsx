@@ -6,6 +6,7 @@ export type BuildItem = {
     name: string;
     category: string;
     price: number;
+    msrp?: number;
     url: string;
     image: string;
 };
@@ -45,6 +46,7 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                 <th className="px-6 py-4">{showPriceFirst ? 'Price' : 'Component Name'}</th>
                                 <th className="px-6 py-4">Category</th>
                                 <th className="px-6 py-4">{showPriceFirst ? 'Component Name' : 'Price'}</th>
+                                <th className="px-6 py-4">Release Price</th>
                                 <th className="px-6 py-4 text-right">Actions</th>
                             </tr>
                         </thead>
@@ -101,6 +103,25 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                 {item.name}
                                             </a>
                                         ) : formatPrice(item.price)}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {item.msrp != null ? (
+                                            <div className="flex flex-col">
+                                                <span className="font-medium text-gray-700 text-sm">{formatPrice(item.msrp)}</span>
+                                                {item.price < item.msrp && (
+                                                    <span className="text-[10px] font-bold text-green-600 uppercase tracking-wide">
+                                                        -{Math.round((1 - item.price / item.msrp) * 100)}% off
+                                                    </span>
+                                                )}
+                                                {item.price > item.msrp && (
+                                                    <span className="text-[10px] font-bold text-red-500 uppercase tracking-wide">
+                                                        +{Math.round((item.price / item.msrp - 1) * 100)}% over
+                                                    </span>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <span className="text-gray-300">—</span>
+                                        )}
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button

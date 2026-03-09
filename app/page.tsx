@@ -71,7 +71,7 @@ export default function Home() {
     return "Component";
   };
 
-  const handleAdd = (url: string, price: string, manualName?: string) => {
+  const handleAdd = (url: string, price: string, manualName?: string, msrp?: string) => {
     const priceNum = parseFloat(price);
     if (isNaN(priceNum)) return;
 
@@ -79,7 +79,6 @@ export default function Home() {
     let category: string;
 
     if (manualName) {
-      // Format: "Category::Name" from manual mode
       const [cat, ...nameParts] = manualName.split('::');
       itemName = nameParts.join('::');
       category = cat;
@@ -88,11 +87,14 @@ export default function Home() {
       category = guessCategory(itemName);
     }
 
+    const msrpNum = msrp ? parseFloat(msrp) : undefined;
+
     const newItem: BuildItem = {
       id: Date.now().toString(),
       name: itemName,
       category,
       price: priceNum,
+      msrp: msrpNum && !isNaN(msrpNum) ? msrpNum : undefined,
       url: url,
       image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop",
     };
