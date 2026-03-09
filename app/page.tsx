@@ -1,14 +1,9 @@
 "use client";
 import React, { useState } from 'react';
-
-type BuildItem = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  url: string;
-  image: string;
-};
+import Sidebar from '@/components/Sidebar';
+import Header from '@/components/Header';
+import QuickAdd from '@/components/QuickAdd';
+import BuildTable, { BuildItem } from '@/components/BuildTable';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([
@@ -30,9 +25,6 @@ export default function Home() {
     },
   ]);
 
-  const [urlInput, setUrlInput] = useState("");
-  const [priceInput, setPriceInput] = useState("");
-
   const extractNameFromUrl = (url: string) => {
     try {
       const parsed = new URL(url);
@@ -50,26 +42,22 @@ export default function Home() {
     }
   };
 
-  const handleQuickAdd = () => {
-    if (!urlInput || !priceInput) return;
-
-    const priceNum = parseFloat(priceInput);
+  const handleAdd = (url: string, price: string) => {
+    const priceNum = parseFloat(price);
     if (isNaN(priceNum)) return;
 
-    const itemName = extractNameFromUrl(urlInput);
+    const itemName = extractNameFromUrl(url);
 
     const newItem: BuildItem = {
       id: Date.now().toString(),
       name: itemName,
       category: "Component", // Default category or could be guessed
       price: priceNum,
-      url: urlInput,
+      url: url,
       image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDeLZ9-jRi6sHYXOhaabDLZzs_IyR4tJrds4XjL5dy14Esp4nYpdpaHqmE6L_yd4xHP1ePMQlgux7EnXy7c7-sPau2ow2JPAz69N6OgbViSsWnLfPzvMOzj2T5Fpz82TjRcPlCLeyhwgpbOkpLK7JaHVdFpkDFU1l3-4I3hgjPKPyk-fKb4IOu52xAOKk3I2diDG45jRVFt_gCzLe5yy3BhP57fdXBNMjQD0xjGnCBkTVtqacjhzzAaakU3w0IE5lykOL37ijhJiiMY", // Placeholder image
     };
 
     setItems([...items, newItem]);
-    setUrlInput("");
-    setPriceInput("");
   };
 
   const handleDelete = (id: string) => {
@@ -85,53 +73,11 @@ export default function Home() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <aside className="w-64 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col hidden md:flex">
-        <div className="p-6 flex items-center gap-3">
-          <div className="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
-            <span className="material-symbols-outlined">desktop_windows</span>
-          </div>
-          <div>
-            <h1 className="text-sm font-bold leading-tight">PC Builder Pro</h1>
-            <p className="text-xs text-slate-500">Expert Mode</p>
-          </div>
-        </div>
-        <nav className="flex-1 px-4 space-y-1">
-          <a className="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium" href="#">
-            <span className="material-symbols-outlined">build</span>
-            <span className="text-sm">Build</span>
-          </a>
-          <a className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-            <span className="material-symbols-outlined">favorite</span>
-            <span className="text-sm">Saved</span>
-          </a>
-        </nav>
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-3 p-2">
-            <div className="size-8 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-200 flex items-center justify-center">
-              <span className="material-symbols-outlined text-sm">person</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold truncate">Builder</p>
-              <p className="text-[10px] text-slate-500 truncate">Pro Account</p>
-            </div>
-          </div>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-y-auto">
-        {/* Header */}
-        <header className="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 flex items-center justify-between px-8">
-          <div className="flex items-center gap-4">
-            <h2 className="text-lg font-bold">PC Build Calculator</h2>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
-              Save Build
-            </button>
-          </div>
-        </header>
+        <Header />
 
         <div className="p-4 md:p-8 space-y-8 max-w-6xl mx-auto w-full">
           {/* Dashboard Hero/Stats */}
@@ -153,104 +99,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Quick Add Section */}
-          <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-lg font-bold mb-4">Quick Add Component</h3>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-              <div className="md:col-span-7">
-                <label className="block text-xs font-bold text-slate-500 mb-1">Product URL (Shopee Supported)</label>
-                <input
-                  type="url"
-                  value={urlInput}
-                  onChange={(e) => setUrlInput(e.target.value)}
-                  className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                  placeholder="https://shopee.vn/example..."
-                />
-              </div>
-              <div className="md:col-span-3">
-                <label className="block text-xs font-bold text-slate-500 mb-1">Price (Number)</label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-serif">$</span>
-                  <input
-                    type="number"
-                    value={priceInput}
-                    onChange={(e) => setPriceInput(e.target.value)}
-                    className="w-full pl-7 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-                    placeholder="0"
-                  />
-                </div>
-              </div>
-              <div className="md:col-span-2 flex items-end">
-                <button
-                  onClick={handleQuickAdd}
-                  className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-bold py-2 rounded-lg hover:opacity-90 transition-opacity active:scale-95">
-                  Add
-                </button>
-              </div>
-            </div>
-          </section>
+          <QuickAdd onAdd={handleAdd} />
 
-          {/* Current Build Table */}
-          <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-              <h3 className="font-bold">Current Build Details</h3>
-            </div>
-            <div className="overflow-x-auto">
-              {items.length === 0 ? (
-                <div className="p-8 text-center text-slate-400">
-                  <span className="material-symbols-outlined text-4xl mb-2 opacity-50">shopping_cart</span>
-                  <p>Your build is empty. Add some components!</p>
-                </div>
-              ) : (
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 text-[10px] uppercase font-black tracking-widest">
-                      <th className="px-6 py-3">Component Name</th>
-                      <th className="px-6 py-3">Category</th>
-                      <th className="px-6 py-3">Price</th>
-                      <th className="px-6 py-3 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {items.map((item) => (
-                      <tr key={item.id} className="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="size-10 bg-slate-100 dark:bg-slate-800 rounded flex items-center justify-center overflow-hidden flex-shrink-0">
-                              <img src={item.image} alt={item.category} className="object-cover size-full" />
-                            </div>
-                            <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold hover:text-primary transition-colors line-clamp-2" title={item.name}>
-                              {item.name}
-                            </a>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-xs font-medium px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                            {item.category}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4">
-                          <span className="text-sm font-bold">{formatPrice(item.price)}</span>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => handleDelete(item.id)}
-                            className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 active:scale-95"
-                            title="Delete Item"
-                          >
-                            <span className="material-symbols-outlined text-lg">delete</span>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </div>
-            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800 flex justify-between">
-              <span className="text-slate-500 text-sm font-medium">Showing {items.length} component(s)</span>
-            </div>
-          </section>
+          <BuildTable
+            items={items}
+            onDelete={handleDelete}
+            formatPrice={formatPrice}
+          />
         </div>
       </main>
     </div>
