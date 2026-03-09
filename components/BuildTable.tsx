@@ -16,55 +16,68 @@ type BuildTableProps = {
 };
 
 export default function BuildTable({ items, onDelete, formatPrice }: BuildTableProps) {
+    const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+
     return (
-        <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-                <h3 className="font-bold">Current Build Details</h3>
+        <section className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm" data-purpose="build-details-table">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                <h3 className="font-semibold text-black">Current Build Details</h3>
+                <span className="text-xs text-gray-500 font-medium">Last updated: Just now</span>
             </div>
             <div className="overflow-x-auto">
                 {items.length === 0 ? (
-                    <div className="p-8 text-center text-slate-400">
-                        <span className="material-symbols-outlined text-4xl mb-2 opacity-50">shopping_cart</span>
-                        <p>Your build is empty. Add some components!</p>
+                    <div className="p-12 text-center text-gray-400">
+                        <p className="font-medium text-lg">Your build is empty</p>
+                        <p className="text-sm">Start adding components above to build your dream PC.</p>
                     </div>
                 ) : (
-                    <table className="w-full text-left">
+                    <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-slate-50 dark:bg-slate-800/50 text-slate-500 text-[10px] uppercase font-black tracking-widest">
-                                <th className="px-6 py-3">Component Name</th>
-                                <th className="px-6 py-3">Category</th>
-                                <th className="px-6 py-3">Price</th>
-                                <th className="px-6 py-3 text-right">Actions</th>
+                            <tr className="text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200">
+                                <th className="px-6 py-4">Component Name</th>
+                                <th className="px-6 py-4">Category</th>
+                                <th className="px-6 py-4">Price</th>
+                                <th className="px-6 py-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                        <tbody className="divide-y divide-gray-100">
                             {items.map((item) => (
-                                <tr key={item.id} className="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                <tr key={item.id} className="transition-colors group hover:bg-gray-50">
                                     <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="size-10 bg-slate-100 dark:bg-slate-800 rounded flex items-center justify-center overflow-hidden flex-shrink-0">
-                                                <img src={item.image} alt={item.category} className="object-cover size-full" />
-                                            </div>
-                                            <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold hover:text-primary transition-colors line-clamp-2" title={item.name}>
+                                        <div className="flex items-center space-x-3">
+                                            <img
+                                                alt={item.name}
+                                                className="w-10 h-10 rounded border border-gray-200 object-cover"
+                                                src={item.image}
+                                            />
+                                            <a
+                                                href={item.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1"
+                                                title={item.name}
+                                            >
                                                 {item.name}
                                             </a>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="text-xs font-medium px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                        <span className="px-2.5 py-1 bg-gray-100 text-gray-700 text-[10px] font-bold rounded uppercase tracking-wide">
                                             {item.category}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <span className="text-sm font-bold">{formatPrice(item.price)}</span>
+                                    <td className="px-6 py-4 font-bold text-black">
+                                        {formatPrice(item.price)}
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <button
                                             onClick={() => onDelete(item.id)}
-                                            className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 active:scale-95"
-                                            title="Delete Item"
+                                            className="p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-all"
+                                            title="Remove component"
                                         >
-                                            <span className="material-symbols-outlined text-lg">delete</span>
+                                            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                            </svg>
                                         </button>
                                     </td>
                                 </tr>
@@ -73,8 +86,10 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                     </table>
                 )}
             </div>
-            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800 flex justify-between">
-                <span className="text-slate-500 text-sm font-medium">Showing {items.length} component(s)</span>
+            <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end">
+                <p className="text-sm font-medium">
+                    Current Total: <span className="font-bold ml-2 text-black">{formatPrice(totalPrice)}</span>
+                </p>
             </div>
         </section>
     );

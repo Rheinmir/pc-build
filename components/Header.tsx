@@ -2,12 +2,10 @@ import React from 'react';
 
 export default function Header() {
     return (
-        <header className="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 flex items-center justify-between px-8">
-            <div className="flex items-center gap-4">
-                <h2 className="text-lg font-bold">PC Build Calculator</h2>
-            </div>
-            <div className="flex items-center gap-4">
-                <button className="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
+        <header className="h-20 border-b border-gray-200 px-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-40">
+            <h2 className="text-xl font-semibold text-black">PC Build Calculator</h2>
+            <div className="flex items-center space-x-4">
+                <button className="px-6 py-2.5 bg-black hover:bg-gray-800 text-white text-sm font-semibold rounded-lg transition-all shadow-lg shadow-gray-200" data-purpose="save-action">
                     Save Build
                 </button>
             </div>

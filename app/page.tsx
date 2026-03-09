@@ -72,32 +72,31 @@ export default function Home() {
   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex min-h-screen bg-white">
       <Sidebar />
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-y-auto">
+      <main className="ml-64 flex-1 flex flex-col min-w-0" data-purpose="main-dashboard-content">
         <Header />
 
-        <div className="p-4 md:p-8 space-y-8 max-w-6xl mx-auto w-full">
-          {/* Dashboard Hero/Stats */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div>
-              <h1 className="text-4xl font-black tracking-tight mb-2">My Custom Rig</h1>
-              <p className="text-slate-500 text-lg flex items-center gap-2">
-                Current Estimated Cost:
-                <span className="text-primary font-bold transition-all">{formatPrice(totalPrice)}</span>
+        {/* Content Area */}
+        <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
+          {/* Hero Stats Section */}
+          <section className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6" data-purpose="hero-stats">
+            <div className="space-y-1">
+              <h1 className="text-4xl font-bold tracking-tight text-black">My Custom Rig</h1>
+              <p className="font-medium text-gray-600">
+                Current Estimated Cost: <span className="text-lg text-black font-bold">{formatPrice(totalPrice)}</span>
               </p>
             </div>
-            <div className="flex gap-4 w-full md:w-auto">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl flex-1 md:min-w-[180px]">
-                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-1">Total Items</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">{items.length} Parts</span>
-                </div>
+            <div className="bg-white border border-gray-200 p-6 rounded-2xl w-full md:w-64 shadow-sm" data-purpose="summary-card">
+              <p className="text-xs font-bold text-gray-600 uppercase tracking-widest mb-1">Total Items</p>
+              <div className="flex items-baseline space-x-2">
+                <span className="text-3xl font-bold text-black">{items.length}</span>
+                <span className="text-gray-400 font-medium">Parts</span>
               </div>
             </div>
-          </div>
+          </section>
 
           <QuickAdd onAdd={handleAdd} />
 
