@@ -59,44 +59,19 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                 src={item.image}
                                             />
                                             <div className="flex flex-col min-w-0 flex-1">
-                                                <div className="flip-container perspective-1000 overflow-hidden">
-                                                    <div className="flip-inner">
-                                                        <div className="flip-front">
-                                                            {showPriceFirst ? (
-                                                                <span className="font-bold text-black text-sm">
-                                                                    {formatPrice(item.price)}
-                                                                </span>
-                                                            ) : (
-                                                                <a
-                                                                    href={item.url}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block"
-                                                                    title={item.name}
-                                                                >
-                                                                    {item.name}
-                                                                </a>
-                                                            )}
-                                                        </div>
-                                                        <div className="flip-back">
-                                                            {showPriceFirst ? (
-                                                                <a
-                                                                    href={item.url}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block text-xs"
-                                                                    title={item.name}
-                                                                >
-                                                                    {item.name}
-                                                                </a>
-                                                            ) : (
-                                                                <span className="font-bold text-black text-sm">
-                                                                    {formatPrice(item.price)}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                {showPriceFirst ? (
+                                                    <span className="font-bold text-black text-sm">{formatPrice(item.price)}</span>
+                                                ) : (
+                                                    <a
+                                                        href={item.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block"
+                                                        title={item.name}
+                                                    >
+                                                        {item.name}
+                                                    </a>
+                                                )}
                                                 <button
                                                     onClick={() => setSelectedItem({ name: item.name, category: item.category })}
                                                     className="text-[10px] font-bold text-gray-400 hover:text-black transition-colors flex items-center gap-1 uppercase tracking-wider mt-1"
