@@ -58,19 +58,30 @@ export default function BuildTable({ items, onDelete, formatPrice }: BuildTableP
                                                 className="w-10 h-10 rounded border border-gray-200 object-cover"
                                                 src={item.image}
                                             />
-                                            <div className="flex flex-col">
-                                                <a
-                                                    href={item.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1"
-                                                    title={item.name}
-                                                >
-                                                    {item.name}
-                                                </a>
+                                            <div className="flex flex-col min-w-0 flex-1">
+                                                <div className="flip-container perspective-1000">
+                                                    <div className="flip-inner">
+                                                        <div className="flip-front">
+                                                            <a
+                                                                href={item.url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="font-medium text-gray-900 hover:text-black hover:underline transition-all line-clamp-1 block w-full"
+                                                                title={item.name}
+                                                            >
+                                                                {item.name}
+                                                            </a>
+                                                        </div>
+                                                        <div className="flip-back">
+                                                            <span className="font-bold text-black text-sm">
+                                                                {formatPrice(item.price)}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <button
                                                     onClick={() => setSelectedItem({ name: item.name, category: item.category })}
-                                                    className="text-[10px] font-bold text-gray-400 hover:text-black transition-colors flex items-center gap-1 uppercase tracking-wider"
+                                                    className="text-[10px] font-bold text-gray-400 hover:text-black transition-colors flex items-center gap-1 uppercase tracking-wider mt-1"
                                                 >
                                                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
