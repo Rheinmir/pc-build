@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   title: "PC Build Calculator Pro",
   description: "Calculate and plan your custom PC build",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
