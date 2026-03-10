@@ -20,16 +20,20 @@ export const tierData: TierCategory[] = [
         category: "Graphics Card",
         tiers: {
             S: [
-                { name: "NVIDIA RTX 4090", description: "The ultimate performance king.", msrp: 1599 },
-                { name: "NVIDIA RTX 4080 Super", description: "Top-tier 4K gaming.", msrp: 999 },
+                { name: "NVIDIA RTX 5090", description: "Generational leap — absolute performance king.", msrp: 1999 },
+                { name: "NVIDIA RTX 5080", description: "RTX 50 flagship, dominates 4K.", msrp: 999 },
+                { name: "NVIDIA RTX 4090", description: "Previous gen king, still destroys 4K.", msrp: 1599 },
+                { name: "NVIDIA RTX 4080 Super", description: "Top-tier 4K with great efficiency.", msrp: 999 },
                 { name: "NVIDIA RTX 4080", description: "High-end 4K powerhouse.", msrp: 1199 },
             ],
             A: [
-                { name: "NVIDIA RTX 3080 Ti", description: "Last gen flagship, still a beast.", msrp: 1199 },
-                { name: "AMD Radeon RX 7900 XTX", description: "AMD's top contender.", msrp: 999 },
+                { name: "NVIDIA RTX 5070 Ti", description: "RTX 50 high-end, ~4080 Super performance.", msrp: 749 },
+                { name: "NVIDIA RTX 5070", description: "Excellent RTX 50 value for 1440p/4K.", msrp: 549 },
                 { name: "NVIDIA RTX 4070 Ti Super", description: "Great 1440p high refresh.", msrp: 799 },
                 { name: "NVIDIA RTX 4070 Ti", description: "Excellent 4K gaming.", msrp: 799 },
+                { name: "AMD Radeon RX 7900 XTX", description: "AMD's top contender.", msrp: 999 },
                 { name: "AMD Radeon RX 7900 XT", description: "Strong AMD alternative.", msrp: 899 },
+                { name: "NVIDIA RTX 3080 Ti", description: "Last gen flagship, still a beast.", msrp: 1199 },
             ],
             B: [
                 { name: "NVIDIA RTX 4070 Super", description: "Best value 1440p card.", msrp: 599 },
@@ -39,17 +43,25 @@ export const tierData: TierCategory[] = [
                 { name: "AMD Radeon RX 7700 XT", description: "Solid 1080p/1440p option.", msrp: 449 },
             ],
             C: [
+                { name: "NVIDIA RTX 5060 Ti", description: "RTX 50 midrange, strong 1080p/entry 1440p.", msrp: 379 },
                 { name: "NVIDIA RTX 4060 Ti", description: "Capable mid-range.", msrp: 399 },
+                { name: "NVIDIA RTX 5060", description: "1080p on RTX 50 architecture.", msrp: 299 },
                 { name: "NVIDIA RTX 4060", description: "1080p gaming solid choice.", msrp: 299 },
                 { name: "AMD Radeon RX 7600 XT", description: "Solid entry-level performance.", msrp: 329 },
+                { name: "Intel Arc B580", description: "Intel's best GPU, strong 1080p/entry 1440p.", msrp: 249 },
                 { name: "AMD Radeon RX 7600", description: "Budget 1080p option.", msrp: 269 },
                 { name: "NVIDIA RTX 3060 Ti", description: "Great 1080p/1440p value.", msrp: 399 },
                 { name: "NVIDIA RTX 3060", description: "Mainstream gaming card.", msrp: 329 },
+                { name: "Intel Arc B570", description: "Budget Intel Arc, decent 1080p.", msrp: 219 },
             ],
             D: [
+                { name: "Intel Arc A770", description: "Older Intel flagship, decent but dated.", msrp: 349 },
                 { name: "NVIDIA RTX 3050", description: "Basic gaming performance.", msrp: 249 },
-                { name: "AMD Radeon RX 6500 XT", description: "Budget choice.", msrp: 199 },
+                { name: "Intel Arc A750", description: "Older mid-range Intel Arc.", msrp: 289 },
                 { name: "AMD Radeon RX 6600", description: "Entry 1080p.", msrp: 329 },
+                { name: "Intel Arc A580", description: "Budget Intel Arc entry.", msrp: 179 },
+                { name: "AMD Radeon RX 6500 XT", description: "Budget, limited bandwidth.", msrp: 199 },
+                { name: "Intel Arc A380", description: "Ultra budget Intel entry-level.", msrp: 139 },
                 { name: "NVIDIA GTX 1660 Super", description: "Older budget option.", msrp: 229 },
             ]
         }
