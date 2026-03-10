@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#0a0a0a"/>
+  <!-- IHS silver -->
+  <rect x="15" y="15" width="70" height="70" rx="6" fill="url(#amd-ihs)" stroke="#555" stroke-width="1.5"/>
+  <defs>
+    <linearGradient id="amd-ihs" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b0b0b0"/>
+      <stop offset="40%" style="stop-color:#d8d8d8"/>
+      <stop offset="100%" style="stop-color:#909090"/>
+    </linearGradient>
+  </defs>
+  <!-- Die window -->
+  <rect x="28" y="22" width="44" height="44" rx="3" fill="#1a0a0a" stroke="#444" stroke-width="1"/>
+  <rect x="31" y="25" width="38" height="38" rx="2" fill="#0d0505"/>
+  <!-- Die grid -->
+  <line x1="40" y1="25" x2="40" y2="63" stroke="#1a0505" stroke-width="0.5"/>
+  <line x1="50" y1="25" x2="50" y2="63" stroke="#1a0505" stroke-width="0.5"/>
+  <line x1="60" y1="25" x2="60" y2="63" stroke="#1a0505" stroke-width="0.5"/>
+  <line x1="31" y1="35" x2="69" y2="35" stroke="#1a0505" stroke-width="0.5"/>
+  <line x1="31" y1="44" x2="69" y2="44" stroke="#1a0505" stroke-width="0.5"/>
+  <line x1="31" y1="53" x2="69" y2="53" stroke="#1a0505" stroke-width="0.5"/>
+  <!-- AMD red accent bar -->
+  <rect x="15" y="77" width="70" height="8" rx="0" fill="#ed1c24"/>
+  <!-- AMD arrow logo simplified -->
+  <polygon points="38,82 44,79 50,82 44,85" fill="white" opacity="0.9"/>
+  <text x="55" y="84.5" font-family="Arial,sans-serif" font-size="5.5" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="1">AMD</text>
+  <!-- Ryzen text -->
+  <text x="50" y="73" font-family="Arial,sans-serif" font-size="4" fill="#cc8844" text-anchor="middle" letter-spacing="0.5">RYZEN</text>
+  <!-- Corner marks -->
+  <rect x="18" y="18" width="5" height="5" rx="1" fill="#aaa"/>
+  <rect x="77" y="18" width="5" height="5" rx="1" fill="#aaa"/>
+  <rect x="18" y="77" width="5" height="5" rx="1" fill="#aaa"/>
+  <rect x="77" y="77" width="5" height="5" rx="1" fill="#aaa"/>
+</svg>

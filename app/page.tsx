@@ -84,7 +84,7 @@ export default function Home() {
       price: priceNum,
       msrp: resolvedMsrp,
       url: url,
-      image: getImageForCategory(category),
+      image: getImageForCategory(category, itemName),
     };
 
     setItems([...items, newItem]);
@@ -124,7 +124,7 @@ export default function Home() {
         category: item.category || 'Component',
         price: item.price || 0,
         url: item.url || '#',
-        image: item.image || getImageForCategory(item.category || 'Component')
+        image: item.image || getImageForCategory(item.category || 'Component', item.name)
       }));
 
       if (confirm(`Do you want to replace your current build with ${newItems.length} items from the Excel file? (Cancel to add them to your current build)`)) {
