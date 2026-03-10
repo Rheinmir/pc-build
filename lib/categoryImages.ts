@@ -1,18 +1,18 @@
 const BASE = "https://images.unsplash.com";
-const PARAMS = "?q=80&w=200&auto=format&fit=crop";
+const P = "?q=80&w=200&auto=format&fit=crop";
 
-// One curated Unsplash photo per hardware category
+// Verified Unsplash photo IDs per hardware category
 const CATEGORY_IMAGES: Record<string, string> = {
-    "Graphics Card":  `${BASE}/photo-1591488320449-011701bb6704${PARAMS}`,
-    "Processor":      `${BASE}/photo-1555617980-de63ef5c2e37${PARAMS}`,
-    "Motherboard":    `${BASE}/photo-1518770660439-4636190af475${PARAMS}`,
-    "RAM":            `${BASE}/photo-1562976540-1502c2145851${PARAMS}`,
-    "Storage":        `${BASE}/photo-1597872200969-2b65d56bd16b${PARAMS}`,
-    "Power Supply":   `${BASE}/photo-1587202372775-e229f172b9d7${PARAMS}`,
-    "Case":           `${BASE}/photo-1587202372634-32705e3bf49c${PARAMS}`,
+    "Graphics Card": `${BASE}/photo-1591488320449-011701bb6704${P}`, // RTX GPU
+    "Processor":     `${BASE}/photo-1547082299-de196ea013d6${P}`, // CPU chip
+    "Motherboard":   `${BASE}/photo-1518770660439-4636190af475${P}`, // PCB/motherboard
+    "RAM":           `${BASE}/photo-1587145820266-a5951ee6f620${P}`, // RAM sticks
+    "Storage":       `${BASE}/photo-1531492746076-161ca9bcad58${P}`, // SSD
+    "Power Supply":  `${BASE}/photo-1588508065123-287b28e013da${P}`, // PSU
+    "Case":          `${BASE}/photo-1587202372775-e229f172b9d7${P}`, // PC case
 };
 
-const FALLBACK = `${BASE}/photo-1591488320449-011701bb6704${PARAMS}`;
+const FALLBACK = `${BASE}/photo-1591488320449-011701bb6704${P}`;
 
 export function getImageForCategory(category: string): string {
     return CATEGORY_IMAGES[category] ?? FALLBACK;

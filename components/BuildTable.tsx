@@ -59,6 +59,10 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                 alt={item.name}
                                                 className="w-10 h-10 rounded border border-gray-200 object-cover"
                                                 src={item.image}
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).src =
+                                                        "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop";
+                                                }}
                                             />
                                             <div className="flex flex-col min-w-0 flex-1">
                                                 {showPriceFirst ? (
