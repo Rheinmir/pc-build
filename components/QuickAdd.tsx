@@ -148,8 +148,8 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
     };
 
     return (
-        <section className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm" data-purpose="quick-add-container">
-            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+        <section className="bg-white border border-gray-200 rounded-2xl shadow-sm" data-purpose="quick-add-container">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 rounded-t-2xl flex items-center justify-between">
                 <h3 className="font-semibold text-black">Quick Add Component</h3>
                 <div className="flex items-center bg-gray-200 p-0.5 rounded-lg">
                     <button onClick={() => setMode('url')}
