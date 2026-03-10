@@ -1,4 +1,7 @@
+"use client";
 import React, { useRef } from 'react';
+import { useT } from '@/lib/i18n';
+import type { Lang } from '@/lib/translations';
 
 type HeaderProps = {
     onSave?: () => void;
@@ -10,6 +13,7 @@ type HeaderProps = {
 
 export default function Header({ onSave, onExport, onImport, showPriceFirst, onToggleDisplay }: HeaderProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { t, lang, setLang } = useT();
 
     const handleImportClick = () => {
         fileInputRef.current?.click();
@@ -26,9 +30,22 @@ export default function Header({ onSave, onExport, onImport, showPriceFirst, onT
 
     return (
         <header className="h-20 border-b border-gray-200 px-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-40">
-            <h2 className="text-xl font-semibold text-black">PC Build Calculator</h2>
+            <h2 className="text-xl font-semibold text-black">{t.title}</h2>
 
             <div className="flex items-center space-x-6">
+                {/* Language Toggle */}
+                <div className="flex items-center bg-gray-100 p-1 rounded-lg">
+                    {(['en', 'vi'] as Lang[]).map((l) => (
+                        <button
+                            key={l}
+                            onClick={() => setLang(l)}
+                            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${lang === l ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            {l}
+                        </button>
+                    ))}
+                </div>
+
                 {/* Mode Toggle */}
                 <div className="flex items-center bg-gray-100 p-1 rounded-lg">
                     <button
@@ -36,14 +53,14 @@ export default function Header({ onSave, onExport, onImport, showPriceFirst, onT
                         className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${!showPriceFirst ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
-                        Name
+                        {t.name}
                     </button>
                     <button
                         onClick={onToggleDisplay}
                         className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${showPriceFirst ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
-                        Price
+                        {t.price}
                     </button>
                 </div>
 
@@ -64,7 +81,7 @@ export default function Header({ onSave, onExport, onImport, showPriceFirst, onT
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
-                        Import
+                        {t.import}
                     </button>
                     <button
                         onClick={onExport}
@@ -73,14 +90,14 @@ export default function Header({ onSave, onExport, onImport, showPriceFirst, onT
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                         </svg>
-                        Export
+                        {t.export}
                     </button>
                     <button
                         onClick={onSave}
                         className="px-6 py-2.5 bg-black hover:bg-gray-800 text-white text-sm font-semibold rounded-lg transition-all shadow-lg shadow-gray-200"
                         data-purpose="save-action"
                     >
-                        Save Build
+                        {t.saveBuild}
                     </button>
                 </div>
             </div>

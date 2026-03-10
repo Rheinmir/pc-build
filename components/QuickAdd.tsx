@@ -3,12 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { lookupMsrp } from '@/lib/lookupMsrp';
 import { extractNameFromUrl } from '@/lib/extractName';
 import { msrpLookup } from '@/data/tierData';
+import { useT } from '@/lib/i18n';
 
 type QuickAddProps = {
     onAdd: (url: string, price: string, manualName?: string, msrp?: string) => void;
 };
 
-const CATEGORIES = ["Processor", "Graphics Card", "Motherboard", "RAM", "Storage", "Power Supply", "Case", "Component"];
+const CATEGORIES = ["Processor", "Graphics Card", "Motherboard", "RAM", "Storage", "Power Supply", "Case", "Component"] as const;
 
 // Pre-compute display names once
 const SUGGESTIONS = msrpLookup.map(item => ({
@@ -41,6 +42,7 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const nameEditedRef = useRef(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const { t } = useT();
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -150,26 +152,26 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
     return (
         <section className="bg-white border border-gray-200 rounded-2xl shadow-sm" data-purpose="quick-add-container">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 rounded-t-2xl flex items-center justify-between">
-                <h3 className="font-semibold text-black">Quick Add Component</h3>
+                <h3 className="font-semibold text-black">{t.quickAddTitle}</h3>
                 <div className="flex items-center bg-gray-200 p-0.5 rounded-lg">
                     <button onClick={() => setMode('url')}
                         className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${mode === 'url' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
-                        URL
+                        {t.modeUrl}
                     </button>
                     <button onClick={() => setMode('manual')}
                         className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${mode === 'manual' ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
-                        Manual
+                        {t.modeManual}
                     </button>
                 </div>
             </div>
             <div className="p-6 space-y-4">
                 {mode === 'url' && (
                     <div>
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Product URL (Shopee Supported)</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t.labelProductUrl}</label>
                         <input type="url" value={urlInput} onChange={(e) => setUrlInput(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter') handleAdd(); }}
                             className="w-full bg-white border-gray-300 text-black rounded-xl focus:ring-black focus:border-black placeholder-gray-400 px-4 py-3 border transition-all"
-                            placeholder="https://shopee.vn/example-product-link..." />
+                            placeholder={t.placeholderUrl} />
                     </div>
                 )}
 
@@ -177,9 +179,9 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
                     {/* Name input with custom dropdown */}
                     <div className="md:col-span-4 relative" ref={wrapperRef}>
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1">
-                            Product Name
+                            {t.labelProductName}
                             {mode === 'url' && nameInput && !nameEditedRef.current && (
-                                <span className="text-[9px] text-blue-500 font-bold normal-case tracking-normal">Auto</span>
+                                <span className="text-[9px] text-blue-500 font-bold normal-case tracking-normal">{t.autoLabel}</span>
                             )}
                         </label>
                         <input
@@ -193,7 +195,7 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
                             onFocus={() => { if (nameInput.length >= 2) setShowSuggestions(true); }}
                             onKeyDown={handleNameKeyDown}
                             className="w-full bg-white border-gray-300 text-black rounded-xl focus:ring-black focus:border-black placeholder-gray-400 px-4 py-3 border transition-all"
-                            placeholder={mode === 'url' ? 'Auto-filled from URL...' : 'e.g. RTX 4070 Ti Super...'}
+                            placeholder={mode === 'url' ? t.placeholderNameUrl : t.placeholderNameManual}
                             autoComplete="off"
                         />
                         {/* Suggestion dropdown */}
@@ -214,14 +216,18 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
                     </div>
 
                     <div className="md:col-span-2">
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Category</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t.labelCategory}</label>
                         <select value={categoryInput} onChange={(e) => setCategoryInput(e.target.value)}
                             className="w-full bg-white border-gray-300 text-black rounded-xl focus:ring-black focus:border-black px-4 py-3 border transition-all appearance-none">
-                            {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                            {CATEGORIES.map(c => (
+                                <option key={c} value={c}>
+                                    {t.categories[c]}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Your Price ($)</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{t.labelYourPrice}</label>
                         <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                             <input type="number" value={priceInput} onChange={(e) => setPriceInput(e.target.value)}
@@ -231,8 +237,8 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
                     </div>
                     <div className="md:col-span-2">
                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1">
-                            Release Price
-                            {autoMsrp && <span className="text-[9px] text-green-600 font-bold normal-case tracking-normal">Auto</span>}
+                            {t.labelReleasePrice}
+                            {autoMsrp && <span className="text-[9px] text-green-600 font-bold normal-case tracking-normal">{t.autoLabel}</span>}
                         </label>
                         <div className="relative">
                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
@@ -243,7 +249,7 @@ export default function QuickAdd({ onAdd }: QuickAddProps) {
                     </div>
                     <div className="md:col-span-2">
                         <button onClick={handleAdd} className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition-colors shadow-sm" data-purpose="add-button">
-                            Add to Build
+                            {t.addToBuild}
                         </button>
                     </div>
                 </div>

@@ -8,11 +8,13 @@ import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
 import { lookupMsrp } from '@/lib/lookupMsrp';
 import { extractNameFromUrl } from '@/lib/extractName';
 import { getImageForCategory } from '@/lib/categoryImages';
+import { useT } from '@/lib/i18n';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showPriceFirst, setShowPriceFirst] = useState(false);
+  const { t } = useT();
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -104,12 +106,12 @@ export default function Home() {
       total: items.reduce((acc, item) => acc + item.price, 0)
     };
     localStorage.setItem('pc-builder-saved-builds', JSON.stringify([...savedBuilds, newBuild]));
-    alert("Build saved successfully to your library!");
+    alert(t.buildSaved);
   };
 
   const handleExport = () => {
     if (items.length === 0) {
-      alert("Add some parts before exporting!");
+      alert(t.noPartsToExport);
       return;
     }
     exportToExcel(items);
@@ -127,14 +129,14 @@ export default function Home() {
         image: item.image || getImageForCategory(item.category || 'Component', item.name)
       }));
 
-      if (confirm(`Do you want to replace your current build with ${newItems.length} items from the Excel file? (Cancel to add them to your current build)`)) {
+      if (confirm(t.importConfirm(newItems.length))) {
         setItems(newItems);
       } else {
         setItems([...items, ...newItems]);
       }
     } catch (error) {
       console.error("Import failed", error);
-      alert("Failed to import Excel file. Please make sure it follows the correct format.");
+      alert(t.importFailed);
     }
   };
 
@@ -162,9 +164,9 @@ export default function Home() {
         <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
           {/* Hero Stats Section */}
           <section className="space-y-1" data-purpose="hero-stats">
-            <h1 className="text-4xl font-bold tracking-tight text-black">My Custom Rig</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-black">{t.buildTitle}</h1>
             <p className="font-medium text-gray-500">
-              {items.length} {items.length === 1 ? 'part' : 'parts'} &middot; Total: <span className="text-black font-bold">{formatPrice(totalPrice)}</span>
+              {items.length} {items.length === 1 ? t.partSingular : t.partPlural} &middot; {t.total}: <span className="text-black font-bold">{formatPrice(totalPrice)}</span>
             </p>
           </section>
 

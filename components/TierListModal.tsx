@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { tierData, TierItem } from '@/data/tierData';
 import {
     DndContext,
@@ -10,7 +10,6 @@ import {
     useSensors,
     DragEndEvent,
     DragOverEvent,
-    DragStartEvent,
 } from '@dnd-kit/core';
 import {
     arrayMove,
@@ -21,6 +20,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { useT } from '@/lib/i18n';
 
 type TierListModalProps = {
     isOpen: boolean;
@@ -40,7 +40,7 @@ const tierColors = {
 const tiersArr: (keyof typeof tierColors)[] = ['S', 'A', 'B', 'C', 'D'];
 
 // Sortable Item Component
-function SortableItem({ id, item, isCurrent }: { id: string, item: TierItem, isCurrent: boolean }) {
+function SortableItem({ id, item, isCurrent, selectedLabel }: { id: string, item: TierItem, isCurrent: boolean, selectedLabel: string }) {
     const {
         attributes,
         listeners,
@@ -71,7 +71,7 @@ function SortableItem({ id, item, isCurrent }: { id: string, item: TierItem, isC
             <div className="tier-flip-inner">
                 <div className={`tier-flip-front ${isCurrent ? "bg-white text-black" : "bg-[#252525] text-gray-300"}`}>
                     {item.name}
-                    {isCurrent && <span className="ml-2 text-[10px] uppercase">Selected</span>}
+                    {isCurrent && <span className="ml-2 text-[10px] uppercase">{selectedLabel}</span>}
                 </div>
                 <div className={`tier-flip-back ${isCurrent ? "bg-white text-black" : "bg-[#252525] text-gray-400"}`}>
                     {item.description}
@@ -83,6 +83,7 @@ function SortableItem({ id, item, isCurrent }: { id: string, item: TierItem, isC
 
 export default function TierListModal({ isOpen, onClose, category, currentItemName }: TierListModalProps) {
     const [itemsByTier, setItemsByTier] = useState<Record<string, (TierItem & { id: string })[]>>({});
+    const { t } = useT();
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -117,9 +118,9 @@ export default function TierListModal({ isOpen, onClose, category, currentItemNa
             <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                 <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
                 <div className="relative bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
-                    <h3 className="text-xl font-bold mb-4">No Data Available</h3>
-                    <p className="text-gray-500 mb-6">We don't have tier data for the "{category}" category yet.</p>
-                    <button onClick={onClose} className="w-full bg-black text-white py-3 rounded-xl font-bold">Close</button>
+                    <h3 className="text-xl font-bold mb-4">{t.noDataTitle}</h3>
+                    <p className="text-gray-500 mb-6">{t.noDataDesc(category)}</p>
+                    <button onClick={onClose} className="w-full bg-black text-white py-3 rounded-xl font-bold">{t.close}</button>
                 </div>
             </div>
         );
@@ -204,8 +205,8 @@ export default function TierListModal({ isOpen, onClose, category, currentItemNa
             <div className="relative bg-[#1A1A1A] rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl border border-white/10">
                 <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-[#252525]">
                     <div>
-                        <h3 className="text-xl font-bold text-white">{category} Tier List</h3>
-                        <p className="text-xs text-gray-400 mt-1">Comparing: <span className="text-primary-light font-bold">{currentItemName}</span></p>
+                        <h3 className="text-xl font-bold text-white">{t.tierListTitle(category)}</h3>
+                        <p className="text-xs text-gray-400 mt-1">{t.comparing} <span className="text-primary-light font-bold">{currentItemName}</span></p>
                     </div>
                     <button onClick={onClose} className="p-2 text-gray-400 hover:text-white transition-colors">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -239,12 +240,12 @@ export default function TierListModal({ isOpen, onClose, category, currentItemNa
                                                     item.name.toLowerCase().includes(currentItemName.toLowerCase());
 
                                                 return (
-                                                    <SortableItem key={item.id} id={item.id} item={item} isCurrent={isCurrent} />
+                                                    <SortableItem key={item.id} id={item.id} item={item} isCurrent={isCurrent} selectedLabel={t.selected} />
                                                 );
                                             })}
                                             {(!itemsByTier[tier] || itemsByTier[tier].length === 0) && (
                                                 <div className="w-full h-full min-h-[40px] border-2 border-dashed border-white/5 rounded flex items-center justify-center text-white/5 uppercase text-[10px] font-bold">
-                                                    Drop here
+                                                    {t.dropHere}
                                                 </div>
                                             )}
                                         </div>
