@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#111"/>
+  <!-- RAM stick body -->
+  <rect x="8" y="28" width="84" height="38" rx="3" fill="#1a1525" stroke="#2a1a40" stroke-width="1.5"/>
+  <!-- Memory chips top row -->
+  <rect x="12" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="25" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="38" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="51" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="64" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="77" y="32" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <!-- Memory chips bottom row -->
+  <rect x="12" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="25" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="38" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="51" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="64" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <rect x="77" y="53" width="10" height="9" rx="1" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="0.5"/>
+  <!-- Gold contacts -->
+  <rect x="10" y="64" width="80" height="6" rx="0" fill="#14100a"/>
+  <rect x="11" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="17" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="23" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="29" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="35" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="43" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="49" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="55" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="61" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="67" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="73" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="79" y="64" width="4" height="6" fill="#b8960c"/>
+  <rect x="85" y="64" width="4" height="6" fill="#b8960c"/>
+  <!-- Notch -->
+  <rect x="38" y="64" width="7" height="7" rx="0" fill="#111"/>
+</svg>
