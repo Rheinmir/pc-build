@@ -7,11 +7,9 @@ type HeaderProps = {
     onSave?: () => void;
     onExport?: () => void;
     onImport?: (file: File) => void;
-    showPriceFirst?: boolean;
-    onToggleDisplay?: () => void;
 };
 
-export default function Header({ onSave, onExport, onImport, showPriceFirst, onToggleDisplay }: HeaderProps) {
+export default function Header({ onSave, onExport, onImport }: HeaderProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { t, lang, setLang } = useT();
 
@@ -44,24 +42,6 @@ export default function Header({ onSave, onExport, onImport, showPriceFirst, onT
                             {l}
                         </button>
                     ))}
-                </div>
-
-                {/* Mode Toggle */}
-                <div className="flex items-center bg-gray-100 p-1 rounded-lg">
-                    <button
-                        onClick={onToggleDisplay}
-                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${!showPriceFirst ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        {t.name}
-                    </button>
-                    <button
-                        onClick={onToggleDisplay}
-                        className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${showPriceFirst ? 'bg-white text-black shadow-sm' : 'text-gray-500 hover:text-gray-700'
-                            }`}
-                    >
-                        {t.price}
-                    </button>
                 </div>
 
                 <div className="h-6 w-px bg-gray-200" />

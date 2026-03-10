@@ -13,22 +13,17 @@ import { useT } from '@/lib/i18n';
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showPriceFirst, setShowPriceFirst] = useState(false);
   const { t } = useT();
 
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('pc-builder-current-items');
-    const savedToggle = localStorage.getItem('pc-builder-show-price-first');
     if (saved) {
       try {
         setItems(JSON.parse(saved));
       } catch (e) {
         console.error("Failed to parse saved items", e);
       }
-    }
-    if (savedToggle) {
-      setShowPriceFirst(savedToggle === 'true');
     }
     setIsLoaded(true);
   }, []);
@@ -40,11 +35,6 @@ export default function Home() {
     }
   }, [items, isLoaded]);
 
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem('pc-builder-show-price-first', showPriceFirst.toString());
-    }
-  }, [showPriceFirst, isLoaded]);
 
 
   const guessCategory = (name: string): string => {
@@ -156,8 +146,6 @@ export default function Home() {
           onSave={handleSave}
           onExport={handleExport}
           onImport={handleImport}
-          showPriceFirst={showPriceFirst}
-          onToggleDisplay={() => setShowPriceFirst(!showPriceFirst)}
         />
 
         {/* Content Area */}
@@ -176,7 +164,6 @@ export default function Home() {
             items={items}
             onDelete={handleDelete}
             formatPrice={formatPrice}
-            showPriceFirst={showPriceFirst}
           />
         </div>
       </main>

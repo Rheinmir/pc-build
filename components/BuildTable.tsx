@@ -17,10 +17,9 @@ type BuildTableProps = {
     items: BuildItem[];
     onDelete: (id: string) => void;
     formatPrice: (price: number) => string;
-    showPriceFirst?: boolean;
 };
 
-export default function BuildTable({ items, onDelete, formatPrice, showPriceFirst = false }: BuildTableProps) {
+export default function BuildTable({ items, onDelete, formatPrice }: BuildTableProps) {
     const [selectedItem, setSelectedItem] = useState<{ name: string, category: string } | null>(null);
     const { t } = useT();
     const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
@@ -46,9 +45,9 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-200">
-                                <th className="px-6 py-4">{showPriceFirst ? t.colPrice : t.colName}</th>
+                                <th className="px-6 py-4">{t.colPrice}</th>
                                 <th className="px-6 py-4">{t.colCategory}</th>
-                                <th className="px-6 py-4">{showPriceFirst ? t.colName : t.colPrice}</th>
+                                <th className="px-6 py-4">{t.colName}</th>
                                 <th className="px-6 py-4">{t.colRelease}</th>
                                 <th className="px-6 py-4 text-right">{t.colActions}</th>
                             </tr>
@@ -68,19 +67,15 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                                 }}
                                             />
                                             <div className="flex flex-col min-w-0 flex-1">
-                                                {showPriceFirst ? (
-                                                    <span className="font-bold text-black text-sm">{formatPrice(item.price)}</span>
-                                                ) : (
-                                                    <a
-                                                        href={item.url}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block"
-                                                        title={item.name}
-                                                    >
-                                                        {item.name}
-                                                    </a>
-                                                )}
+                                                <a
+                                                    href={item.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="font-medium text-gray-900 hover:text-black hover:underline transition-all truncate block"
+                                                    title={item.name}
+                                                >
+                                                    {item.name}
+                                                </a>
                                                 <button
                                                     onClick={() => setSelectedItem({ name: item.name, category: item.category })}
                                                     className="text-[10px] font-bold text-gray-400 hover:text-black transition-colors flex items-center gap-1 uppercase tracking-wider mt-1"
@@ -99,17 +94,7 @@ export default function BuildTable({ items, onDelete, formatPrice, showPriceFirs
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 font-bold text-black text-sm">
-                                        {showPriceFirst ? (
-                                            <a
-                                                href={item.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="font-medium text-gray-500 hover:text-black hover:underline transition-all line-clamp-1 text-xs max-w-[180px] block"
-                                                title={item.name}
-                                            >
-                                                {item.name}
-                                            </a>
-                                        ) : formatPrice(item.price)}
+                                        {formatPrice(item.price)}
                                     </td>
                                     <td className="px-6 py-4">
                                         {item.msrp != null ? (
