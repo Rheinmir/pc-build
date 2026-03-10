@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { tierData, TierItem } from '@/data/tierData';
+import { tierData, TierItem, TierKey, TIER_KEYS } from '@/data/tierData';
 import {
     DndContext,
     closestCenter,
@@ -29,15 +29,23 @@ type TierListModalProps = {
     currentItemName: string;
 };
 
-const tierColors = {
-    S: "bg-[#FF7F7F]",
-    A: "bg-[#FFBF7F]",
-    B: "bg-[#FFDF7F]",
-    C: "bg-[#FFFF7F]",
-    D: "bg-[#BEFF7F]"
+const tierColors: Record<TierKey, string> = {
+    'S+': 'bg-[#FF4444]',
+    'S':  'bg-[#FF7F7F]',
+    'S-': 'bg-[#FF9999]',
+    'A+': 'bg-[#FF8C00]',
+    'A':  'bg-[#FFBF7F]',
+    'A-': 'bg-[#FFCC99]',
+    'B+': 'bg-[#FFD700]',
+    'B':  'bg-[#FFDF7F]',
+    'B-': 'bg-[#FFEC99]',
+    'C+': 'bg-[#CCDD00]',
+    'C':  'bg-[#DDEE44]',
+    'C-': 'bg-[#EEFF77]',
+    'D+': 'bg-[#88DD44]',
+    'D':  'bg-[#AAEE66]',
+    'D-': 'bg-[#BBFF88]',
 };
-
-const tiersArr: (keyof typeof tierColors)[] = ['S', 'A', 'B', 'C', 'D'];
 
 // Sortable Item Component
 function SortableItem({ id, item, isCurrent, selectedLabel }: { id: string, item: TierItem, isCurrent: boolean, selectedLabel: string }) {
@@ -101,8 +109,8 @@ export default function TierListModal({ isOpen, onClose, category, currentItemNa
             const data = tierData.find(d => d.category === category);
             if (data) {
                 const initial: Record<string, (TierItem & { id: string })[]> = {};
-                tiersArr.forEach(t => {
-                    initial[t] = data.tiers[t].map(item => ({ ...item, id: `${t}-${item.name}` }));
+                TIER_KEYS.forEach(t => {
+                    initial[t] = data.tiers[t].map((item: TierItem) => ({ ...item, id: `${t}-${item.name}` }));
                 });
                 setItemsByTier(initial);
             }
@@ -223,7 +231,7 @@ export default function TierListModal({ isOpen, onClose, category, currentItemNa
                         onDragEnd={handleDragEnd}
                         modifiers={[restrictToWindowEdges]}
                     >
-                        {tiersArr.map((tier) => (
+                        {TIER_KEYS.map((tier) => (
                             <div key={tier} className="flex min-h-[80px] bg-[#1A1A1A] group">
                                 <div className={`${tierColors[tier]} w-24 flex items-center justify-center text-2xl font-black text-black/80 flex-shrink-0`}>
                                     {tier}

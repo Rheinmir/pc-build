@@ -4,111 +4,129 @@ export type TierItem = {
     msrp?: number;
 };
 
+export type TierKey = 'S+' | 'S' | 'S-' | 'A+' | 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'D-';
+
+export const TIER_KEYS: TierKey[] = ['S+', 'S', 'S-', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-'];
+
 export type TierCategory = {
     category: string;
-    tiers: {
-        S: TierItem[];
-        A: TierItem[];
-        B: TierItem[];
-        C: TierItem[];
-        D: TierItem[];
-    };
+    tiers: Record<TierKey, TierItem[]>;
 };
 
 export const tierData: TierCategory[] = [
     {
         category: "Graphics Card",
         tiers: {
-            S: [
+            'S+': [
                 { name: "NVIDIA RTX 5090", description: "Generational leap, absolute king of 2025", msrp: 1999 },
+            ],
+            'S': [
                 { name: "NVIDIA RTX 5080", description: "RTX 50 flagship, dominates 4K", msrp: 999 },
                 { name: "NVIDIA RTX 4090", description: "Previous gen king, still destroys 4K", msrp: 1599 },
+            ],
+            'S-': [
                 { name: "NVIDIA RTX 4080 Super", description: "Top-tier 4K with great efficiency", msrp: 999 },
                 { name: "NVIDIA RTX 4080", description: "High-end 4K powerhouse", msrp: 1199 },
                 { name: "NVIDIA RTX 3090 Ti", description: "RTX 30 extreme flagship", msrp: 1999 },
-                { name: "NVIDIA RTX 3090", description: "Creator/compute titan", msrp: 1499 },
-                { name: "NVIDIA RTX 2080 Ti", description: "RTX 20 generation king", msrp: 999 },
-                { name: "NVIDIA GTX 1080 Ti", description: "Pascal flagship, legendary card", msrp: 699 },
             ],
-            A: [
+            'A+': [
                 { name: "NVIDIA RTX 5070 Ti", description: "RTX 50 high-end, ~4080 Super performance", msrp: 749 },
+                { name: "NVIDIA RTX 3090", description: "Creator/compute titan", msrp: 1499 },
+                { name: "AMD Radeon RX 9070 XT", description: "AMD RDNA 4 flagship, RTX 5070 rival", msrp: 599 },
+            ],
+            'A': [
                 { name: "NVIDIA RTX 5070", description: "Excellent RTX 50 value for 1440p/4K", msrp: 549 },
                 { name: "NVIDIA RTX 4070 Ti Super", description: "Great 1440p high refresh", msrp: 799 },
                 { name: "NVIDIA RTX 4070 Ti", description: "Excellent 4K gaming", msrp: 799 },
-                { name: "AMD Radeon RX 9070 XT", description: "AMD RDNA 4 flagship, RTX 5070 rival", msrp: 599 },
                 { name: "AMD Radeon RX 7900 XTX", description: "AMD's top RDNA3 card", msrp: 999 },
+            ],
+            'A-': [
                 { name: "AMD Radeon RX 7900 XT", description: "Strong RDNA3 alternative", msrp: 899 },
                 { name: "AMD Radeon RX 6900 XT", description: "RDNA2 flagship", msrp: 999 },
-                { name: "AMD Radeon RX 6800 XT", description: "Excellent RDNA2 performance", msrp: 649 },
                 { name: "NVIDIA RTX 3080 Ti", description: "RTX 30 near-flagship", msrp: 1199 },
+                { name: "NVIDIA RTX 2080 Ti", description: "RTX 20 generation king", msrp: 999 },
+                { name: "AMD Radeon RX 6800 XT", description: "Excellent RDNA2 performance", msrp: 649 },
+            ],
+            'B+': [
+                { name: "NVIDIA RTX 4070 Super", description: "Best value RTX 40 1440p card", msrp: 599 },
                 { name: "NVIDIA RTX 3080 12GB", description: "Refreshed RTX 30 powerhouse", msrp: 799 },
                 { name: "NVIDIA RTX 3080", description: "RTX 30 mainstream flagship", msrp: 699 },
                 { name: "NVIDIA RTX 2080 Super", description: "RTX 20 high-end refresh", msrp: 699 },
-                { name: "NVIDIA RTX 2080", description: "RTX 20 high-end", msrp: 699 },
-                { name: "NVIDIA GTX 1080", description: "Pascal high-end", msrp: 599 },
-                { name: "NVIDIA GTX 980 Ti", description: "Maxwell flagship", msrp: 649 },
-            ],
-            B: [
-                { name: "NVIDIA RTX 4070 Super", description: "Best value RTX 40 1440p card", msrp: 599 },
-                { name: "NVIDIA RTX 4070", description: "Sweet spot for most gamers", msrp: 599 },
                 { name: "AMD Radeon RX 9070", description: "RDNA4 solid mid-high", msrp: 499 },
+            ],
+            'B': [
+                { name: "NVIDIA RTX 4070", description: "Sweet spot for most gamers", msrp: 599 },
                 { name: "AMD Radeon RX 7800 XT", description: "Excellent RDNA3 value", msrp: 499 },
-                { name: "AMD Radeon RX 7700 XT", description: "Solid 1080p/1440p RDNA3", msrp: 449 },
                 { name: "AMD Radeon RX 6800", description: "RDNA2 strong mid-high", msrp: 579 },
+                { name: "NVIDIA RTX 2080", description: "RTX 20 high-end", msrp: 699 },
+                { name: "NVIDIA GTX 1080 Ti", description: "Pascal flagship, legendary card", msrp: 699 },
+            ],
+            'B-': [
+                { name: "AMD Radeon RX 7700 XT", description: "Solid 1080p/1440p RDNA3", msrp: 449 },
                 { name: "AMD Radeon RX 6750 XT", description: "RDNA2 refresh", msrp: 549 },
                 { name: "AMD Radeon RX 6700 XT", description: "Capable RDNA2 mid-range", msrp: 479 },
                 { name: "NVIDIA RTX 3070 Ti", description: "RTX 30 high mid-range", msrp: 599 },
-                { name: "NVIDIA RTX 3070", description: "RTX 30 sweet spot", msrp: 499 },
                 { name: "NVIDIA RTX 2070 Super", description: "RTX 20 mid-high refresh", msrp: 499 },
+                { name: "NVIDIA GTX 1080", description: "Pascal high-end", msrp: 599 },
+                { name: "NVIDIA GTX 980 Ti", description: "Maxwell flagship", msrp: 649 },
+            ],
+            'C+': [
+                { name: "NVIDIA RTX 5060 Ti", description: "RTX 50 midrange, strong 1080p", msrp: 379 },
+                { name: "NVIDIA RTX 3070", description: "RTX 30 sweet spot", msrp: 499 },
                 { name: "NVIDIA RTX 2070", description: "RTX 20 mid-high", msrp: 499 },
                 { name: "NVIDIA GTX 1070 Ti", description: "Pascal near-flagship", msrp: 449 },
-                { name: "NVIDIA GTX 1070", description: "Pascal strong mid-range", msrp: 379 },
+                { name: "AMD RX Vega 64", description: "AMD's 2017 flagship, outdated", msrp: 499 },
                 { name: "NVIDIA GTX 980", description: "Maxwell strong performer", msrp: 549 },
             ],
-            C: [
-                { name: "NVIDIA RTX 5060 Ti", description: "RTX 50 midrange, strong 1080p", msrp: 379 },
+            'C': [
                 { name: "NVIDIA RTX 4060 Ti", description: "RTX 40 capable mid-range", msrp: 399 },
                 { name: "NVIDIA RTX 5060", description: "1080p on RTX 50 architecture", msrp: 299 },
                 { name: "NVIDIA RTX 4060", description: "1080p gaming solid choice", msrp: 299 },
                 { name: "AMD Radeon RX 7600 XT", description: "RDNA3 entry-level solid", msrp: 329 },
                 { name: "Intel Arc B580", description: "Intel's best GPU, strong 1080p", msrp: 249 },
+                { name: "NVIDIA RTX 2060 Super", description: "RTX 20 mid refresh", msrp: 399 },
+                { name: "NVIDIA GTX 1070", description: "Pascal strong mid-range", msrp: 379 },
+            ],
+            'C-': [
                 { name: "AMD Radeon RX 7600", description: "Budget RDNA3 1080p", msrp: 269 },
                 { name: "AMD Radeon RX 6650 XT", description: "RDNA2 refresh mid", msrp: 399 },
                 { name: "AMD Radeon RX 6600 XT", description: "Solid RDNA2 mid", msrp: 379 },
                 { name: "NVIDIA RTX 3060 Ti", description: "RTX 30 mid-range value", msrp: 399 },
                 { name: "NVIDIA RTX 3060", description: "Mainstream RTX 30", msrp: 329 },
                 { name: "Intel Arc B570", description: "Budget Intel Arc 1080p", msrp: 219 },
-                { name: "NVIDIA RTX 2060 Super", description: "RTX 20 mid refresh", msrp: 399 },
                 { name: "NVIDIA RTX 2060", description: "RTX 20 entry high", msrp: 349 },
                 { name: "NVIDIA GTX 1660 Ti", description: "GTX 16 top", msrp: 279 },
+                { name: "NVIDIA GTX 1060 6GB", description: "Pascal mainstream classic", msrp: 249 },
+            ],
+            'D+': [
                 { name: "NVIDIA GTX 1660 Super", description: "GTX 16 sweet spot", msrp: 229 },
                 { name: "NVIDIA GTX 1660", description: "GTX 16 base", msrp: 219 },
-                { name: "NVIDIA GTX 1060 6GB", description: "Pascal mainstream classic", msrp: 249 },
-                { name: "NVIDIA GTX 970", description: "Maxwell mid-range classic", msrp: 329 },
-                { name: "AMD Radeon RX 580", description: "Polaris refresh workhorse", msrp: 229 },
-                { name: "AMD Radeon RX 570", description: "Budget Polaris", msrp: 169 },
-                { name: "AMD RX Vega 64", description: "AMD's 2017 flagship, outdated", msrp: 499 },
-            ],
-            D: [
                 { name: "Intel Arc A770", description: "Older Intel flagship, decent but dated", msrp: 349 },
-                { name: "Intel Arc A750", description: "Older mid-range Intel Arc", msrp: 289 },
-                { name: "Intel Arc A580", description: "Budget Intel Arc", msrp: 179 },
-                { name: "Intel Arc A380", description: "Ultra budget Intel entry", msrp: 139 },
+                { name: "AMD Radeon RX 580", description: "Polaris refresh workhorse", msrp: 229 },
+                { name: "AMD Radeon RX 5700 XT", description: "Dated RDNA1, driver issues", msrp: 399 },
+                { name: "NVIDIA GTX 970", description: "Maxwell mid-range classic", msrp: 329 },
+            ],
+            'D': [
                 { name: "NVIDIA RTX 3050", description: "Basic RTX 30 gaming", msrp: 249 },
+                { name: "Intel Arc A750", description: "Older mid-range Intel Arc", msrp: 289 },
                 { name: "AMD Radeon RX 6600", description: "Entry RDNA2 1080p", msrp: 329 },
                 { name: "AMD Radeon RX 6500 XT", description: "Budget RDNA2, limited bandwidth", msrp: 199 },
-                { name: "AMD Radeon RX 5700 XT", description: "Dated RDNA1, driver issues", msrp: 399 },
                 { name: "AMD Radeon RX 5600 XT", description: "RDNA1 budget option", msrp: 279 },
-                { name: "AMD Radeon RX 5500 XT", description: "Entry RDNA1", msrp: 169 },
                 { name: "NVIDIA GTX 1650 Super", description: "Budget Pascal/Turing", msrp: 159 },
+                { name: "AMD Radeon RX 570", description: "Budget Polaris", msrp: 169 },
+                { name: "AMD Radeon RX 480", description: "Older Polaris", msrp: 199 },
+                { name: "NVIDIA GTX 960", description: "Maxwell budget classic", msrp: 199 },
+            ],
+            'D-': [
+                { name: "Intel Arc A580", description: "Budget Intel Arc", msrp: 179 },
+                { name: "Intel Arc A380", description: "Ultra budget Intel entry", msrp: 139 },
+                { name: "AMD Radeon RX 5500 XT", description: "Entry RDNA1", msrp: 169 },
                 { name: "NVIDIA GTX 1650", description: "Very budget entry", msrp: 149 },
                 { name: "NVIDIA GTX 1050 Ti", description: "Older budget", msrp: 139 },
                 { name: "NVIDIA GTX 1050", description: "Bare minimum", msrp: 109 },
-                { name: "AMD Radeon RX 480", description: "Older Polaris", msrp: 199 },
                 { name: "AMD Radeon RX 470", description: "Budget Polaris", msrp: 179 },
                 { name: "AMD Radeon R9 390", description: "Old Hawaii, power hungry", msrp: 329 },
                 { name: "AMD Radeon R9 380", description: "Old Tonga", msrp: 199 },
-                { name: "NVIDIA GTX 960", description: "Maxwell budget classic", msrp: 199 },
                 { name: "NVIDIA GTX 950", description: "Old budget", msrp: 159 },
             ],
         },
@@ -116,80 +134,100 @@ export const tierData: TierCategory[] = [
     {
         category: "Processor",
         tiers: {
-            S: [
-                { name: "AMD Ryzen 9 9950X", description: "Zen 5 flagship, productivity king", msrp: 649 },
+            'S+': [
                 { name: "AMD Ryzen 9 7950X3D", description: "Best gaming + workstation CPU", msrp: 699 },
+                { name: "AMD Ryzen 9 9950X", description: "Zen 5 flagship, productivity king", msrp: 649 },
+            ],
+            'S': [
                 { name: "AMD Ryzen 9 7950X", description: "Top-tier Zen 4 workstation", msrp: 699 },
                 { name: "Intel Core i9-14900KS", description: "Intel's fastest consumer CPU", msrp: 699 },
                 { name: "Intel Core i9-14900K", description: "High-end Raptor Lake Refresh", msrp: 589 },
+                { name: "Intel Core Ultra 9 285K", description: "Arrow Lake flagship", msrp: 589 },
+            ],
+            'S-': [
                 { name: "Intel Core i9-13900KS", description: "Intel's 2023 extreme", msrp: 699 },
                 { name: "Intel Core i9-13900K", description: "Raptor Lake flagship", msrp: 589 },
-                { name: "Intel Core Ultra 9 285K", description: "Arrow Lake flagship", msrp: 589 },
+                { name: "AMD Ryzen 9 7900X", description: "Zen 4 high-end", msrp: 449 },
                 { name: "AMD Ryzen Threadripper 3960X", description: "HEDT monster", msrp: 1399 },
             ],
-            A: [
+            'A+': [
                 { name: "AMD Ryzen 9 9900X", description: "Zen 5 high-end", msrp: 449 },
                 { name: "AMD Ryzen 7 9800X3D", description: "Best gaming CPU 2024", msrp: 479 },
                 { name: "AMD Ryzen 7 7800X3D", description: "Best gaming CPU 2023", msrp: 449 },
                 { name: "AMD Ryzen 9 7900X3D", description: "Gaming + productivity Zen 4", msrp: 449 },
-                { name: "AMD Ryzen 9 7900X", description: "Zen 4 high-end", msrp: 449 },
+            ],
+            'A': [
                 { name: "AMD Ryzen 9 5950X", description: "Zen 3 workstation", msrp: 799 },
                 { name: "AMD Ryzen 9 5900X", description: "Zen 3 powerhouse", msrp: 549 },
                 { name: "Intel Core Ultra 7 265K", description: "Arrow Lake high-end", msrp: 394 },
                 { name: "Intel Core i7-14700K", description: "Raptor Lake Refresh mid-high", msrp: 409 },
+            ],
+            'A-': [
                 { name: "Intel Core i7-13700K", description: "Raptor Lake strong performer", msrp: 409 },
                 { name: "Intel Core i9-12900K", description: "Alder Lake flagship", msrp: 589 },
-                { name: "Intel Core i9-11900K", description: "Rocket Lake, aged poorly", msrp: 539 },
                 { name: "Intel Core i9-10900K", description: "Comet Lake 10-core", msrp: 488 },
+                { name: "Intel Core i9-11900K", description: "Rocket Lake, aged poorly", msrp: 539 },
             ],
-            B: [
+            'B+': [
                 { name: "AMD Ryzen 7 9700X", description: "Zen 5 efficient gaming", msrp: 359 },
-                { name: "AMD Ryzen 5 9600X", description: "Zen 5 mid-range", msrp: 279 },
                 { name: "AMD Ryzen 7 7700X", description: "Zen 4 mid-high", msrp: 399 },
                 { name: "AMD Ryzen 7 7700", description: "Zen 4 non-X great value", msrp: 329 },
-                { name: "AMD Ryzen 5 7600X", description: "Zen 4 midrange sweet spot", msrp: 299 },
-                { name: "AMD Ryzen 5 7600", description: "Efficient AM5 midrange", msrp: 229 },
-                { name: "AMD Ryzen 7 5800X3D", description: "3D V-Cache AM4 champion", msrp: 449 },
-                { name: "AMD Ryzen 7 5800X", description: "Zen 3 gaming pick", msrp: 449 },
-                { name: "AMD Ryzen 5 5600X", description: "Zen 3 midrange classic", msrp: 299 },
-                { name: "AMD Ryzen 5 5600", description: "Best budget AM4", msrp: 199 },
-                { name: "Intel Core Ultra 5 245K", description: "Arrow Lake midrange", msrp: 309 },
                 { name: "Intel Core i7-12700K", description: "Alder Lake mid-high", msrp: 409 },
+            ],
+            'B': [
+                { name: "AMD Ryzen 5 9600X", description: "Zen 5 mid-range", msrp: 279 },
+                { name: "AMD Ryzen 5 7600X", description: "Zen 4 midrange sweet spot", msrp: 299 },
+                { name: "AMD Ryzen 7 5800X3D", description: "3D V-Cache AM4 champion", msrp: 449 },
                 { name: "Intel Core i5-14600K", description: "Raptor Lake gaming pick", msrp: 319 },
                 { name: "Intel Core i5-13600K", description: "Great value Raptor Lake", msrp: 319 },
+            ],
+            'B-': [
+                { name: "AMD Ryzen 5 7600", description: "Efficient AM5 midrange", msrp: 229 },
+                { name: "AMD Ryzen 7 5800X", description: "Zen 3 gaming pick", msrp: 449 },
+                { name: "AMD Ryzen 5 5600X", description: "Zen 3 midrange classic", msrp: 299 },
+                { name: "Intel Core Ultra 5 245K", description: "Arrow Lake midrange", msrp: 309 },
                 { name: "Intel Core i5-12600K", description: "Alder Lake classic", msrp: 289 },
                 { name: "Intel Core i7-10700K", description: "Comet Lake mid-high", msrp: 374 },
                 { name: "Intel Core i7-9700K", description: "Coffee Lake Refresh gaming", msrp: 374 },
             ],
-            C: [
-                { name: "AMD Ryzen 5 5500", description: "Budget Zen 3", msrp: 159 },
-                { name: "AMD Ryzen 5 5600GT", description: "AM4 with iGPU", msrp: 149 },
-                { name: "AMD Ryzen 5 4600G", description: "AM4 APU midrange", msrp: 159 },
-                { name: "AMD Ryzen 5 3600X", description: "Zen 2 capable but dated", msrp: 249 },
-                { name: "AMD Ryzen 5 3600", description: "Zen 2 midrange classic", msrp: 199 },
-                { name: "AMD Ryzen 7 3700X", description: "Zen 2 gaming pick, aging", msrp: 329 },
+            'C+': [
+                { name: "AMD Ryzen 5 5600", description: "Best budget AM4", msrp: 199 },
                 { name: "Intel Core i5-12400", description: "Budget Alder Lake great value", msrp: 192 },
                 { name: "Intel Core i5-11600K", description: "Rocket Lake mid", msrp: 262 },
                 { name: "Intel Core i5-10600K", description: "Comet Lake mid", msrp: 262 },
+            ],
+            'C': [
+                { name: "AMD Ryzen 5 5500", description: "Budget Zen 3", msrp: 159 },
+                { name: "AMD Ryzen 5 5600GT", description: "AM4 with iGPU", msrp: 149 },
+                { name: "AMD Ryzen 5 3600X", description: "Zen 2 capable but dated", msrp: 249 },
+                { name: "AMD Ryzen 5 4600G", description: "AM4 APU midrange", msrp: 159 },
                 { name: "Intel Core i5-10400", description: "Budget Comet Lake", msrp: 182 },
-                { name: "Intel Core i3-13100", description: "Budget quad Raptor Lake", msrp: 134 },
                 { name: "Intel Core i5-9600K", description: "Coffee Lake Refresh", msrp: 262 },
+            ],
+            'C-': [
+                { name: "AMD Ryzen 5 3600", description: "Zen 2 midrange classic", msrp: 199 },
+                { name: "AMD Ryzen 7 3700X", description: "Zen 2 gaming pick, aging", msrp: 329 },
+                { name: "AMD Ryzen 5 2600X", description: "Zen+ aging", msrp: 229 },
+                { name: "Intel Core i3-13100", description: "Budget quad Raptor Lake", msrp: 134 },
                 { name: "Intel Core i7-8700K", description: "Coffee Lake classic, aged", msrp: 359 },
                 { name: "Intel Core i5-8600K", description: "Coffee Lake mid", msrp: 257 },
-                { name: "AMD Ryzen 5 2600X", description: "Zen+ aging", msrp: 229 },
+            ],
+            'D+': [
                 { name: "AMD Ryzen 5 2600", description: "Budget Zen+ option", msrp: 199 },
                 { name: "AMD Ryzen 7 2700X", description: "Zen+ high-end, dated", msrp: 329 },
-            ],
-            D: [
                 { name: "AMD Ryzen 5 1600", description: "Original Zen, outdated", msrp: 219 },
-                { name: "AMD Ryzen 7 1700", description: "Original Zen, outdated", msrp: 329 },
-                { name: "Intel Core i3-12100", description: "Basic budget quad", msrp: 122 },
-                { name: "Intel Core i3-10100", description: "Budget Comet Lake", msrp: 122 },
                 { name: "Intel Core i5-7600K", description: "Kaby Lake, very dated", msrp: 242 },
                 { name: "Intel Core i7-7700K", description: "Kaby Lake, very dated", msrp: 339 },
+            ],
+            'D': [
+                { name: "AMD Ryzen 7 1700", description: "Original Zen, outdated", msrp: 329 },
                 { name: "Intel Core i5-6600K", description: "Skylake, very dated", msrp: 243 },
                 { name: "Intel Core i7-6700K", description: "Skylake, very dated", msrp: 350 },
+                { name: "Intel Core i3-12100", description: "Basic budget quad", msrp: 122 },
+                { name: "Intel Core i3-10100", description: "Budget Comet Lake", msrp: 122 },
                 { name: "Intel Pentium Gold G6400", description: "Very basic dual-core", msrp: 64 },
+            ],
+            'D-': [
                 { name: "AMD Athlon 3000G", description: "Ultra budget APU", msrp: 49 },
                 { name: "AMD FX-8350", description: "Pre-Ryzen, avoid", msrp: 195 },
                 { name: "AMD FX-6300", description: "Old bulldozer budget", msrp: 132 },
@@ -201,52 +239,71 @@ export const tierData: TierCategory[] = [
     {
         category: "Motherboard",
         tiers: {
-            S: [
+            'S+': [
                 { name: "ASUS ROG Maximus Z890 Apex", description: "Top Z890 for Arrow Lake OC", msrp: 699 },
                 { name: "ASUS ROG Maximus Z790", description: "Flagship Z790 overclocking board", msrp: 699 },
-                { name: "MSI MEG Z790 ACE", description: "Top-tier Z790 board", msrp: 599 },
                 { name: "ASUS ROG Crosshair X870E Hero", description: "Flagship AM5 X870E", msrp: 649 },
+            ],
+            'S': [
+                { name: "MSI MEG Z790 ACE", description: "Top-tier Z790 board", msrp: 599 },
                 { name: "Gigabyte X670E Aorus Master", description: "Premium X670E AM5", msrp: 499 },
             ],
-            A: [
+            'S-': [],
+            'A+': [
                 { name: "ASUS ROG Strix Z890-E", description: "Premium Z890 gaming", msrp: 449 },
                 { name: "ASUS ROG Strix Z790-E", description: "Premium gaming Z790", msrp: 449 },
+            ],
+            'A': [
                 { name: "MSI MAG Z790 Tomahawk", description: "Great value Z790", msrp: 279 },
                 { name: "Gigabyte Z790 AORUS Elite", description: "Feature-rich Z790", msrp: 299 },
                 { name: "ASUS ROG Strix X670E-F", description: "Premium X670E gaming", msrp: 399 },
+            ],
+            'A-': [
                 { name: "MSI MEG X570 Godlike", description: "Top X570 for AM4", msrp: 499 },
                 { name: "ASUS ROG Crosshair VIII Hero", description: "Flagship AM4 X570", msrp: 399 },
                 { name: "Gigabyte Z490 AORUS Master", description: "Premium Z490 for 10th gen", msrp: 329 },
                 { name: "ASUS ROG Maximus XII Apex", description: "Z490 extreme OC", msrp: 599 },
             ],
-            B: [
+            'B+': [
                 { name: "ASUS TUF Gaming Z890", description: "Reliable mid-range Z890", msrp: 249 },
                 { name: "ASUS TUF Gaming Z790", description: "Reliable mid-range Z790", msrp: 229 },
+            ],
+            'B': [
                 { name: "MSI Pro Z790-A", description: "Budget Z790", msrp: 199 },
                 { name: "ASUS ROG Strix B650-A", description: "AM5 gaming board", msrp: 249 },
                 { name: "MSI MAG B650 Tomahawk", description: "Value AM5", msrp: 199 },
+            ],
+            'B-': [
                 { name: "ASUS Prime X570-Pro", description: "Mid AM4 X570", msrp: 219 },
                 { name: "MSI MAG X570S Tomahawk Max", description: "Great AM4 value", msrp: 229 },
                 { name: "Gigabyte B550 AORUS Pro", description: "Mid AM4 B550", msrp: 179 },
+            ],
+            'C+': [
                 { name: "ASUS TUF Gaming B550-Plus", description: "Budget AM4 gaming", msrp: 149 },
                 { name: "MSI MAG B550 Tomahawk", description: "Popular AM4 mid", msrp: 169 },
+            ],
+            'C': [
+                { name: "Gigabyte B650M DS3H", description: "Entry AM5 mATX", msrp: 139 },
                 { name: "Gigabyte Z390 AORUS Pro", description: "Mid Z390 Coffee Lake", msrp: 199 },
                 { name: "ASUS Prime Z490-A", description: "Mid Z490", msrp: 199 },
             ],
-            C: [
-                { name: "Gigabyte B650M DS3H", description: "Entry AM5 mATX", msrp: 139 },
+            'C-': [
                 { name: "ASUS Prime B550M-A", description: "Budget AM4 mATX", msrp: 119 },
                 { name: "MSI B450 Tomahawk Max", description: "Popular budget AM4", msrp: 129 },
                 { name: "Gigabyte B450 AORUS Pro", description: "Mid AM4 B450", msrp: 119 },
+            ],
+            'D+': [
                 { name: "ASUS Prime B450M-A", description: "Budget AM4", msrp: 89 },
                 { name: "MSI Z390-A Pro", description: "Budget Z390", msrp: 139 },
                 { name: "Gigabyte B365M DS3H", description: "Budget Coffee Lake", msrp: 79 },
                 { name: "ASUS Prime Z370-A", description: "Mid Z370 for 8th gen", msrp: 164 },
-                { name: "MSI B350 Tomahawk", description: "Budget Ryzen 1000/2000", msrp: 109 },
             ],
-            D: [
+            'D': [
+                { name: "MSI B350 Tomahawk", description: "Budget Ryzen 1000/2000", msrp: 109 },
                 { name: "MSI B450M-A Pro", description: "Budget AM4 entry", msrp: 79 },
                 { name: "Gigabyte B450M DS3H", description: "Very budget AM4", msrp: 69 },
+            ],
+            'D-': [
                 { name: "ASRock B450M-HDV", description: "Bare minimum AM4", msrp: 69 },
                 { name: "Gigabyte H310M S2H", description: "Budget H310 for 8th/9th gen", msrp: 79 },
                 { name: "MSI H310M Pro-VDH", description: "Ultra budget H310", msrp: 69 },
@@ -257,36 +314,56 @@ export const tierData: TierCategory[] = [
     {
         category: "RAM",
         tiers: {
-            S: [
+            'S+': [
                 { name: "G.Skill Trident Z5 RGB DDR5-7200 32GB", description: "Extreme DDR5 enthusiast kit", msrp: 229 },
+            ],
+            'S': [
                 { name: "G.Skill Trident Z5 RGB DDR5-6400 32GB", description: "Top DDR5 kit", msrp: 189 },
                 { name: "Corsair Dominator Platinum DDR5-6400 32GB", description: "Premium DDR5 flagship", msrp: 199 },
+            ],
+            'S-': [
                 { name: "G.Skill Trident Z5 RGB DDR5-6000 64GB", description: "High capacity DDR5", msrp: 259 },
             ],
-            A: [
+            'A+': [
                 { name: "G.Skill Ripjaws S5 DDR5-6000 32GB", description: "Great DDR5 value", msrp: 109 },
-                { name: "Kingston Fury Beast DDR5-5600 32GB", description: "Solid DDR5 kit", msrp: 99 },
                 { name: "Corsair Vengeance DDR5-5600 32GB", description: "Reliable DDR5", msrp: 99 },
+            ],
+            'A': [
+                { name: "Kingston Fury Beast DDR5-5600 32GB", description: "Solid DDR5 kit", msrp: 99 },
                 { name: "G.Skill Trident Z Neo DDR4-3600 32GB", description: "Best DDR4 kit for Ryzen", msrp: 89 },
+            ],
+            'A-': [
                 { name: "Corsair Dominator Platinum DDR4-3600 32GB", description: "Premium DDR4", msrp: 149 },
             ],
-            B: [
+            'B+': [
                 { name: "G.Skill Ripjaws V DDR4-3600 16GB", description: "Best value DDR4 kit", msrp: 49 },
+            ],
+            'B': [
                 { name: "Corsair Vengeance LPX DDR4-3200 32GB", description: "Popular DDR4 upgrade", msrp: 79 },
-                { name: "Corsair Vengeance LPX DDR4-3200 16GB", description: "Popular DDR4 kit", msrp: 44 },
-                { name: "Kingston Fury Beast DDR4-3200 16GB", description: "Reliable DDR4", msrp: 39 },
-                { name: "G.Skill Aegis DDR4-3200 16GB", description: "Budget no-frills DDR4", msrp: 39 },
                 { name: "Crucial Ballistix DDR4-3600 16GB", description: "Great OC potential DDR4", msrp: 49 },
             ],
-            C: [
+            'B-': [
+                { name: "Corsair Vengeance LPX DDR4-3200 16GB", description: "Popular DDR4 kit", msrp: 44 },
+                { name: "Kingston Fury Beast DDR4-3200 16GB", description: "Reliable DDR4", msrp: 39 },
+            ],
+            'C+': [
+                { name: "G.Skill Aegis DDR4-3200 16GB", description: "Budget no-frills DDR4", msrp: 39 },
+            ],
+            'C': [
                 { name: "Crucial DDR4-3200 16GB", description: "Budget-friendly DDR4", msrp: 35 },
                 { name: "Team T-Force Delta DDR4-3200 16GB", description: "Decent budget RGB DDR4", msrp: 37 },
+            ],
+            'C-': [
                 { name: "Kingston HyperX Fury DDR4-2666 16GB", description: "Basic budget kit", msrp: 32 },
                 { name: "Corsair Vengeance LPX DDR4-2400 8GB", description: "Entry single stick", msrp: 22 },
+            ],
+            'D+': [
                 { name: "G.Skill Ripjaws V DDR4-2666 8GB", description: "Budget single stick", msrp: 24 },
             ],
-            D: [
+            'D': [
                 { name: "Generic DDR4-2666 8GB", description: "Absolute minimum, no OC", msrp: 18 },
+            ],
+            'D-': [
                 { name: "Generic DDR4-2133 4GB", description: "Very old spec, avoid", msrp: 12 },
                 { name: "Crucial DDR3-1600 8GB", description: "Legacy DDR3", msrp: 25 },
                 { name: "Kingston DDR3-1600 4GB", description: "Old DDR3", msrp: 18 },
@@ -296,42 +373,61 @@ export const tierData: TierCategory[] = [
     {
         category: "Storage",
         tiers: {
-            S: [
-                { name: "Samsung 990 Pro 2TB", description: "Fastest consumer Gen4 NVMe", msrp: 179 },
-                { name: "WD Black SN850X 2TB", description: "Top gaming NVMe drive", msrp: 159 },
+            'S+': [
                 { name: "Crucial T705 2TB", description: "Gen5 NVMe blazing fast", msrp: 229 },
                 { name: "Samsung 9100 Pro 2TB", description: "Gen5 next-gen SSD", msrp: 249 },
                 { name: "Seagate FireCuda 540 2TB", description: "High-end Gen5 NVMe", msrp: 239 },
             ],
-            A: [
+            'S': [
+                { name: "Samsung 990 Pro 2TB", description: "Fastest consumer Gen4 NVMe", msrp: 179 },
+                { name: "WD Black SN850X 2TB", description: "Top gaming NVMe drive", msrp: 159 },
+            ],
+            'S-': [
                 { name: "Samsung 980 Pro 2TB", description: "Excellent Gen4 NVMe", msrp: 149 },
                 { name: "Seagate FireCuda 530 2TB", description: "Fast Gen4 SSD", msrp: 159 },
                 { name: "Crucial T700 2TB", description: "Solid Gen5 value", msrp: 199 },
+            ],
+            'A+': [
                 { name: "WD Black SN770 1TB", description: "Great Gen4 value drive", msrp: 79 },
-                { name: "Samsung 970 EVO Plus 2TB", description: "Reliable Gen3 powerhouse", msrp: 139 },
                 { name: "Kingston KC3000 2TB", description: "High-end Gen4 option", msrp: 149 },
             ],
-            B: [
-                { name: "Samsung 870 EVO 1TB", description: "Reliable SATA SSD workhorse", msrp: 89 },
-                { name: "Samsung 870 QVO 2TB", description: "High capacity SATA budget", msrp: 109 },
+            'A': [
+                { name: "Samsung 970 EVO Plus 2TB", description: "Reliable Gen3 powerhouse", msrp: 139 },
+            ],
+            'A-': [],
+            'B+': [
                 { name: "WD Blue SN580 1TB", description: "Good value Gen4", msrp: 69 },
-                { name: "Kingston NV3 1TB", description: "Budget NVMe option", msrp: 59 },
-                { name: "Crucial MX500 2TB", description: "Reliable SATA budget pick", msrp: 109 },
                 { name: "Crucial P3 Plus 1TB", description: "Gen4 budget NVMe", msrp: 59 },
+            ],
+            'B': [
+                { name: "Samsung 870 EVO 1TB", description: "Reliable SATA SSD workhorse", msrp: 89 },
                 { name: "Sabrent Rocket 4 Plus 1TB", description: "Decent Gen4 mid-range", msrp: 79 },
             ],
-            C: [
+            'B-': [
+                { name: "Samsung 870 QVO 2TB", description: "High capacity SATA budget", msrp: 109 },
+                { name: "Kingston NV3 1TB", description: "Budget NVMe option", msrp: 59 },
+            ],
+            'C+': [
+                { name: "Crucial MX500 2TB", description: "Reliable SATA budget pick", msrp: 109 },
                 { name: "Crucial MX500 1TB", description: "Reliable budget SATA", msrp: 74 },
+            ],
+            'C': [
                 { name: "Kingston A400 1TB", description: "Very budget SATA SSD", msrp: 54 },
                 { name: "WD Green 1TB SATA", description: "Budget SATA, low TBW", msrp: 49 },
+            ],
+            'C-': [
                 { name: "Seagate BarraCuda 4TB HDD", description: "High capacity budget HDD", msrp: 79 },
                 { name: "Seagate BarraCuda 2TB HDD", description: "Popular mid HDD", msrp: 54 },
+            ],
+            'D+': [
                 { name: "WD Blue 4TB HDD", description: "Budget high capacity", msrp: 89 },
                 { name: "Toshiba P300 2TB HDD", description: "Cheap spinning disk", msrp: 49 },
             ],
-            D: [
+            'D': [
                 { name: "WD Blue 1TB HDD", description: "Basic spinning disk", msrp: 44 },
                 { name: "Seagate BarraCuda 1TB HDD", description: "Entry spinning storage", msrp: 39 },
+            ],
+            'D-': [
                 { name: "Generic SATA SSD 256GB", description: "Bare minimum SSD", msrp: 24 },
                 { name: "Sandisk SSD Plus 240GB", description: "Old budget SSD", msrp: 34 },
                 { name: "Kingston A400 240GB", description: "Entry budget SSD", msrp: 29 },
@@ -341,90 +437,130 @@ export const tierData: TierCategory[] = [
     {
         category: "Power Supply",
         tiers: {
-            S: [
-                { name: "Corsair HX1200i 1200W", description: "Premium fully modular 80+ Platinum", msrp: 299 },
-                { name: "Corsair HX1000i 1000W", description: "Top-tier 80+ Platinum modular", msrp: 249 },
+            'S+': [
                 { name: "Seasonic Prime TX-1000 1000W", description: "Best-in-class TX titanium", msrp: 259 },
-                { name: "Seasonic Prime TX-850 850W", description: "Premium Titanium PSU", msrp: 199 },
                 { name: "be quiet! Dark Power Pro 12 1200W", description: "German-engineered silence", msrp: 299 },
             ],
-            A: [
+            'S': [
+                { name: "Corsair HX1200i 1200W", description: "Premium fully modular 80+ Platinum", msrp: 299 },
+                { name: "Corsair HX1000i 1000W", description: "Top-tier 80+ Platinum modular", msrp: 249 },
+            ],
+            'S-': [
+                { name: "Seasonic Prime TX-850 850W", description: "Premium Titanium PSU", msrp: 199 },
+            ],
+            'A+': [
                 { name: "Corsair RM1000x 1000W", description: "High wattage 80+ Gold modular", msrp: 189 },
-                { name: "Corsair RM850x 850W", description: "Reliable 80+ Gold modular", msrp: 149 },
                 { name: "EVGA SuperNOVA 1000 G6", description: "High-end Gold modular", msrp: 169 },
-                { name: "EVGA SuperNOVA 850 G6", description: "Great modular gold PSU", msrp: 139 },
+            ],
+            'A': [
+                { name: "Corsair RM850x 850W", description: "Reliable 80+ Gold modular", msrp: 149 },
                 { name: "be quiet! Straight Power 11 850W", description: "Silent premium PSU", msrp: 149 },
                 { name: "Seasonic Focus GX-1000 1000W", description: "Reliable Gold Focus", msrp: 169 },
+            ],
+            'A-': [
+                { name: "EVGA SuperNOVA 850 G6", description: "Great modular gold PSU", msrp: 139 },
                 { name: "Corsair RM750x 750W", description: "Popular Gold modular", msrp: 129 },
             ],
-            B: [
+            'B+': [
                 { name: "Seasonic Focus GX-750 750W", description: "Great value Gold PSU", msrp: 119 },
-                { name: "MSI MAG A750GL 750W", description: "Mid-range 80+ Gold", msrp: 99 },
-                { name: "Corsair CV650 650W", description: "Budget reliable PSU", msrp: 79 },
-                { name: "be quiet! Pure Power 11 600W", description: "Silent budget PSU", msrp: 79 },
-                { name: "EVGA 600W BR 80+ Bronze", description: "Basic 80+ Bronze", msrp: 59 },
                 { name: "Cooler Master MWE Gold 750W", description: "Gold at mid price", msrp: 99 },
+            ],
+            'B': [
+                { name: "MSI MAG A750GL 750W", description: "Mid-range 80+ Gold", msrp: 99 },
                 { name: "Antec Earthwatts Gold 650W", description: "Reliable budget Gold", msrp: 89 },
                 { name: "Thermaltake Toughpower GF 750W", description: "Mid Gold option", msrp: 99 },
             ],
-            C: [
+            'B-': [
+                { name: "Corsair CV650 650W", description: "Budget reliable PSU", msrp: 79 },
+                { name: "be quiet! Pure Power 11 600W", description: "Silent budget PSU", msrp: 79 },
+            ],
+            'C+': [
                 { name: "Cooler Master MWE 650W Bronze", description: "Budget 80+ Bronze", msrp: 64 },
-                { name: "Thermaltake Smart 600W", description: "Basic budget PSU", msrp: 49 },
-                { name: "EVGA 500W W3", description: "Entry tier PSU", msrp: 49 },
                 { name: "Corsair CX550 550W", description: "Budget Corsair", msrp: 69 },
+            ],
+            'C': [
+                { name: "EVGA 600W BR 80+ Bronze", description: "Basic 80+ Bronze", msrp: 59 },
                 { name: "Seasonic S12III 500W Bronze", description: "Budget 80+ Bronze", msrp: 49 },
+            ],
+            'C-': [
+                { name: "Thermaltake Smart 600W", description: "Basic budget PSU", msrp: 49 },
                 { name: "FSP Hyper 700W", description: "Decent budget", msrp: 69 },
             ],
-            D: [
-                { name: "Generic 500W PSU", description: "Risky, no brand support", msrp: 29 },
+            'D+': [
+                { name: "EVGA 500W W3", description: "Entry tier PSU", msrp: 49 },
+            ],
+            'D': [
                 { name: "Thermaltake Smart 500W", description: "Basic entry PSU", msrp: 39 },
                 { name: "Cougar VTE 500W", description: "Very budget, risky", msrp: 35 },
+            ],
+            'D-': [
+                { name: "Generic 500W PSU", description: "Risky, no brand support", msrp: 29 },
             ],
         },
     },
     {
         category: "Case",
         tiers: {
-            S: [
+            'S+': [
                 { name: "Lian Li O11 Dynamic EVO XL", description: "Ultimate dual-chamber case", msrp: 199 },
-                { name: "Lian Li O11 Dynamic EVO", description: "Premium dual-chamber airflow", msrp: 179 },
                 { name: "Fractal Design Torrent", description: "Best airflow available", msrp: 189 },
-                { name: "Lian Li PC-O11 Air EVO", description: "Excellent airflow O11 variant", msrp: 169 },
-                { name: "Phanteks Enthoo Elite", description: "Full tower luxury", msrp: 259 },
             ],
-            A: [
-                { name: "Lian Li O11 Dynamic", description: "Popular dual-chamber case", msrp: 139 },
+            'S': [
+                { name: "Lian Li O11 Dynamic EVO", description: "Premium dual-chamber airflow", msrp: 179 },
+                { name: "Lian Li PC-O11 Air EVO", description: "Excellent airflow O11 variant", msrp: 169 },
+            ],
+            'S-': [
+                { name: "Phanteks Enthoo Elite", description: "Full tower luxury", msrp: 259 },
                 { name: "NZXT H9 Elite", description: "Premium panoramic glass", msrp: 199 },
+            ],
+            'A+': [
+                { name: "Lian Li O11 Dynamic", description: "Popular dual-chamber case", msrp: 139 },
                 { name: "Corsair 5000D Airflow", description: "Top airflow mid-tower", msrp: 174 },
+            ],
+            'A': [
                 { name: "Fractal Design North", description: "Unique wood-panel design", msrp: 149 },
                 { name: "be quiet! Dark Base 700", description: "Silent premium case", msrp: 189 },
-                { name: "Corsair 4000D Airflow", description: "Great airflow at mid price", msrp: 104 },
-                { name: "NZXT H510 Flow", description: "Clean airflow mid-tower", msrp: 99 },
-                { name: "be quiet! Pure Base 500DX", description: "Silent with good airflow", msrp: 109 },
-                { name: "Phanteks Eclipse P500A", description: "Great airflow mesh front", msrp: 109 },
             ],
-            B: [
+            'A-': [
+                { name: "Phanteks Eclipse P500A", description: "Great airflow mesh front", msrp: 109 },
+                { name: "Corsair 4000D Airflow", description: "Great airflow at mid price", msrp: 104 },
+                { name: "be quiet! Pure Base 500DX", description: "Silent with good airflow", msrp: 109 },
+            ],
+            'B+': [
+                { name: "NZXT H510 Flow", description: "Clean airflow mid-tower", msrp: 99 },
+                { name: "Corsair 4000X RGB", description: "Glass panel RGB airflow", msrp: 124 },
+            ],
+            'B': [
+                { name: "Cooler Master HAF 500", description: "High airflow gaming", msrp: 99 },
+                { name: "Thermaltake View 51", description: "4-sided tempered glass", msrp: 139 },
+            ],
+            'B-': [
                 { name: "Fractal Design Pop Air", description: "Budget airflow option", msrp: 89 },
                 { name: "Cooler Master MasterBox TD500", description: "Value mesh case", msrp: 89 },
                 { name: "NZXT H5 Flow", description: "Compact clean airflow", msrp: 99 },
-                { name: "Cooler Master HAF 500", description: "High airflow gaming", msrp: 99 },
-                { name: "Thermaltake View 51", description: "4-sided tempered glass", msrp: 139 },
-                { name: "Fractal Design Define R5", description: "Silent classic", msrp: 109 },
-                { name: "Corsair 4000X RGB", description: "Glass panel RGB airflow", msrp: 124 },
             ],
-            C: [
-                { name: "Phanteks P300A", description: "Budget mesh case", msrp: 59 },
-                { name: "Cooler Master Q300L", description: "Budget micro-ATX", msrp: 49 },
-                { name: "DeepCool MATREXX 55", description: "Budget glass panel", msrp: 59 },
-                { name: "Thermaltake S100 TG", description: "Budget small form factor", msrp: 49 },
+            'C+': [
+                { name: "Fractal Design Define R5", description: "Silent classic", msrp: 109 },
+            ],
+            'C': [
                 { name: "NZXT H510", description: "Clean minimalist", msrp: 69 },
                 { name: "Corsair 275R Airflow", description: "Budget Corsair airflow", msrp: 79 },
+                { name: "Phanteks P300A", description: "Budget mesh case", msrp: 59 },
+            ],
+            'C-': [
                 { name: "Fractal Design Focus G", description: "Budget airflow", msrp: 59 },
+                { name: "Cooler Master Q300L", description: "Budget micro-ATX", msrp: 49 },
+                { name: "DeepCool MATREXX 55", description: "Budget glass panel", msrp: 59 },
+            ],
+            'D+': [
+                { name: "Thermaltake S100 TG", description: "Budget small form factor", msrp: 49 },
                 { name: "BitFenix Neos", description: "Old budget option", msrp: 49 },
             ],
-            D: [
-                { name: "Generic ATX Case", description: "Basic budget enclosure", msrp: 30 },
+            'D': [
                 { name: "Cougar MX330", description: "Very budget gaming case", msrp: 39 },
+            ],
+            'D-': [
+                { name: "Generic ATX Case", description: "Basic budget enclosure", msrp: 30 },
                 { name: "Deepcool D-Shield V2", description: "Entry budget", msrp: 35 },
             ],
         },
