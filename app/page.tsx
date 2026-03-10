@@ -7,6 +7,7 @@ import BuildTable, { BuildItem } from '@/components/BuildTable';
 import { exportToExcel, importFromExcel } from '@/lib/excelUtils';
 import { lookupMsrp } from '@/lib/lookupMsrp';
 import { extractNameFromUrl } from '@/lib/extractName';
+import { getImageForCategory } from '@/lib/categoryImages';
 
 export default function Home() {
   const [items, setItems] = useState<BuildItem[]>([]);
@@ -83,7 +84,7 @@ export default function Home() {
       price: priceNum,
       msrp: resolvedMsrp,
       url: url,
-      image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop",
+      image: getImageForCategory(category),
     };
 
     setItems([...items, newItem]);
@@ -123,7 +124,7 @@ export default function Home() {
         category: item.category || 'Component',
         price: item.price || 0,
         url: item.url || '#',
-        image: item.image || "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=200&auto=format&fit=crop"
+        image: item.image || getImageForCategory(item.category || 'Component')
       }));
 
       if (confirm(`Do you want to replace your current build with ${newItems.length} items from the Excel file? (Cancel to add them to your current build)`)) {
